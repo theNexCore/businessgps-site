@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { BrandArc } from "@/components/BrandGeometry";
 import { CTAPanel } from "@/components/CTAPanel";
 import { Focus10Diagram } from "@/components/Focus10Diagram";
+import { FourSquares } from "@/components/FourSquares";
 import { AccentStrip, Band, Container, Eyebrow, SectionHeading } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -73,6 +74,15 @@ export default function Focus10Page() {
             ))}
           </ol>
         </div>
+      </Band>
+
+      {/* The blocks sit immediately before the triad, so "L.I.N.K. is what
+          connects it all" lands on something the reader has just seen. Same
+          shared component, so the treatment can never drift from the home page
+          or /philosophy/link. */}
+      <Band tone="wash">
+        <Eyebrow>How the whole thing works</Eyebrow>
+        <FourSquares />
       </Band>
 
       <Band tone="white">
