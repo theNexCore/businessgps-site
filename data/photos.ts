@@ -4,11 +4,8 @@
  * Files live in /public/photos/ as bgps-photo-01.jpg … bgps-photo-21.jpg.
  * These are the only image filenames that may appear anywhere in the code.
  *
- *   01-09, 18-20   candid meeting shots
- *   10-17, 21      group and event shots
- *
- * 18-21 were added after the original seventeen, so they sit outside the
- * original contiguous banding rather than renumbering every file.
+ *   01-12   candid meeting shots
+ *   13-21   group and event shots
  *
  * `photoSets` decides which photos appear where. Change a value there to
  * feature a different image — no component needs editing.
@@ -27,9 +24,9 @@ const group = "Members of a BusinessGPS chapter, St. Louis";
 
 /** Photos specific enough to describe get their own alt text. */
 const described: Record<number, string> = {
-  18: "A small group reviewing notes together at a BusinessGPS meeting",
-  19: "Four BusinessGPS members working around a table, St. Louis",
-  20: "Two members in conversation at a window counter before a BusinessGPS meeting",
+  10: "A small group reviewing notes together at a BusinessGPS meeting",
+  11: "Four BusinessGPS members working around a table, St. Louis",
+  12: "Two members in conversation at a window counter before a BusinessGPS meeting",
   21: "Members of a St. Louis BusinessGPS chapter together after a meeting",
 };
 
@@ -41,12 +38,12 @@ function photo(index: number, fallback: string): Photo {
 }
 
 /** Candid meeting shots. */
-export const candid: Photo[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 18, 19, 20].map((n) =>
+export const candid: Photo[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((n) =>
   photo(n, meeting),
 );
 
 /** Group and event shots. */
-export const groups: Photo[] = [10, 11, 12, 13, 14, 15, 16, 17, 21].map((n) => photo(n, group));
+export const groups: Photo[] = [13, 14, 15, 16, 17, 18, 19, 20, 21].map((n) => photo(n, group));
 
 export const photos: Photo[] = [...candid, ...groups];
 
@@ -69,9 +66,9 @@ export const photoSets = {
   homeHistory: [groups[0], candid[1], groups[3], candid[7]],
   /** /in-practice: "Show up early." and the guest panel. */
   showUpEarly: candid[0],
-  guestPanel: frame(20),
+  guestPanel: frame(12),
   /** /chapters: a two-up strip. */
-  chapters: [frame(19), frame(18)],
+  chapters: [frame(11), frame(10)],
   /** /history: the narrative gallery, six to eight images. */
   history: [
     candid[2],

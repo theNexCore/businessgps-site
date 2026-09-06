@@ -108,11 +108,8 @@ boundary — structure, not calendar dates.
 Twenty-one archive photos live in `public/photos/` as `bgps-photo-01.jpg` … `bgps-photo-21.jpg`.
 **These are the only image filenames that may appear anywhere in the code.**
 
-- `01-09`, `18-20` — candid meeting shots
-- `10-17`, `21` — group and event shots
-
-18-21 were added after the original seventeen, so the two bands are not contiguous; renumbering
-would have churned every reference for no gain.
+- `01-12` — candid meeting shots
+- `13-21` — group and event shots
 
 The file has two parts:
 
@@ -126,8 +123,8 @@ export const photoSets = {
   homeRequirements: frame(21),     // Home, beside "This room asks something of you."
   homeHistory: [...],              // Home, the history-band strip
   showUpEarly: candid[0],          // /in-practice, "Show up early."
-  guestPanel: frame(20),           // /in-practice, guest expectations
-  chapters: [frame(19), frame(18)],// /chapters, two-up strip
+  guestPanel: frame(12),           // /in-practice, guest expectations
+  chapters: [frame(11), frame(10)],// /chapters, two-up strip
   history: [...],                  // /history, the narrative gallery
 };
 ```
