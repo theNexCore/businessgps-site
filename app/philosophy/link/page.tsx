@@ -1,39 +1,46 @@
 import type { Metadata } from "next";
 import { BrandArc, TealArc } from "@/components/BrandGeometry";
 import { CTAPanel } from "@/components/CTAPanel";
+import { FourSquares } from "@/components/FourSquares";
 import { AccentStrip, Band, Container, Eyebrow, SectionHeading } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "L.I.N.K.",
   description:
-    "Listen. Invest. Nurture. Kindle. The four practices taught in BusinessGPS rooms since 2017 — how The Focus10 gets worked.",
+    "Listen. Invest. Nurture. Kindle. A lived philosophy taught in BusinessGPS rooms since 2017 — the working muscle of everything we do.",
   alternates: { canonical: "/philosophy/link" },
 };
 
+/**
+ * One section per practice: the short definition it has always carried, then a
+ * paragraph on what it looks like in a room.
+ *
+ * Draft status: the four long paragraphs are awaiting Jim's voice check.
+ */
 const practices = [
   {
-    letter: "L",
-    word: "Listen.",
-    surface: "bg-blue",
-    body: "Growth starts with attention. You cannot invest in a person you haven't heard.",
+    initial: "L",
+    rest: "isten.",
+    definition: "Growth starts with attention. You cannot invest in a person you haven't heard.",
+    body: "In the room, this is the discipline of being fully present while someone else has the floor — no phone, no rehearsing your own answer, no waiting for your turn. It's harder than it sounds, because everything in a busy week argues against it. But every other practice depends on it: what you hear this week is what you'll know to give next week. A room that doesn't listen is just thirty people taking turns talking.",
   },
   {
-    letter: "I",
-    word: "Invest.",
-    surface: "bg-tealink",
-    body: "Time, experience, honest feedback — given before anything is asked in return.",
+    initial: "I",
+    rest: "nvest.",
+    definition: "Time, experience, honest feedback — given before anything is asked in return.",
+    body: "Investing is what listening becomes when you act on it. It looks like staying ten minutes after the close to answer someone's question, making the introduction nobody asked you for, telling a member the hard true thing instead of the easy kind one. There's no ledger and no scoreboard — which is exactly why it works. Rooms where everyone waits to be paid first stay poor.",
   },
   {
-    letter: "N",
-    word: "Nurture.",
-    surface: "bg-red",
-    body: "Relationships are maintained on purpose. Consistency, not intensity.",
+    initial: "N",
+    rest: "urture.",
+    definition: "Relationships are maintained on purpose. Consistency, not intensity.",
+    body: "Most business relationships die of neglect, not conflict. Nurture is the unglamorous middle: showing up next week, and the week after, remembering what someone told you a month ago and asking how it went. One grand gesture builds nothing; fifty ordinary Thursdays build something nobody can take from you. This is where the thirteen-week rhythm does its quiet work.",
   },
   {
-    letter: "K",
-    word: "Kindle.",
-    surface: "bg-navy",
-    body: "Light something for someone else — the introduction, the push, the spark that starts what they couldn't start alone.",
+    initial: "K",
+    rest: "indle.",
+    definition: "Growth in someone else, deliberately sparked.",
+    body: "Kindle is the practice that points outward. You see something in another member — a capability, an idea, a next step they haven't claimed yet — and you name it, push it, put wind behind it. It's the red arrow breaking through the ring. When a whole room practices this on each other, week after week, people leave bigger than they arrived. That's the point of everything else.",
   },
 ];
 
@@ -43,50 +50,42 @@ export default function LinkPage() {
       <section className="on-navy relative overflow-hidden bg-navy bg-[radial-gradient(120%_120%_at_15%_0%,#052a6e_0%,#001749_58%)]">
         <BrandArc position="top-right" tone="white" size={560} />
         <Container className="relative z-10 py-16 sm:py-24">
-          <Eyebrow tone="light">The practices</Eyebrow>
+          <Eyebrow tone="light">How the whole thing works</Eyebrow>
           <h1 className="text-balance text-4xl font-extrabold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-6xl">
             L.I.N.K.
           </h1>
           <p className="prose-body mt-7 max-w-2xl text-lg text-white/85">
-            Taught in BusinessGPS rooms since 2017. The oldest idea in the company, and still the most
-            important.
+            A lived philosophy taught in BusinessGPS rooms since 2017. It&rsquo;s the working muscle
+            of everything we do.
           </p>
           <AccentStrip tone="light" className="mt-10 max-w-[180px]" />
         </Container>
       </section>
 
-      {/* The four squares, large */}
+      {/* The four blocks, connected and centred — same treatment as the home page. */}
       <Band tone="white">
-        <ul className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
-          {practices.map((practice) => (
-            <li
-              key={practice.word}
-              className={`flex aspect-square flex-col justify-between rounded-2xl p-6 sm:p-8 ${practice.surface}`}
-            >
-              <span className="text-sm font-bold uppercase tracking-[0.3em] text-white/60">
-                {practice.letter}
-              </span>
-              <p className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-                {practice.word}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <FourSquares size="large" caption={false} />
       </Band>
 
-      {/* One section per practice */}
+      {/* One section per practice. */}
       <Band tone="wash" top={false} className="pt-16 sm:pt-24">
         <ol className="space-y-px overflow-hidden rounded-2xl border border-faint bg-faint">
           {practices.map((practice) => (
-            <li key={practice.word} className="bg-white px-6 py-10 sm:px-10 sm:py-12">
-              <div className="grid gap-5 sm:grid-cols-[minmax(0,0.6fr)_minmax(0,1fr)] sm:gap-12">
+            <li key={practice.initial} className="bg-white px-6 py-10 sm:px-10 sm:py-12">
+              <div className="grid gap-6 sm:grid-cols-[minmax(0,0.55fr)_minmax(0,1fr)] sm:gap-12">
                 <div>
-                  <h2 className="text-3xl font-extrabold tracking-tight text-navy sm:text-4xl">
-                    {practice.word}
+                  <h2 className="text-3xl font-extrabold leading-none tracking-tight text-navy sm:text-4xl">
+                    <span className="text-5xl text-blue sm:text-6xl">{practice.initial}</span>
+                    {practice.rest}
                   </h2>
                   <TealArc className="mt-4 w-28" />
                 </div>
-                <p className="prose-body text-lg text-navy/80">{practice.body}</p>
+                <div>
+                  <p className="text-lg font-bold leading-snug tracking-tight text-navy">
+                    {practice.definition}
+                  </p>
+                  <p className="prose-body mt-4 text-navy/80">{practice.body}</p>
+                </div>
               </div>
             </li>
           ))}
@@ -96,8 +95,8 @@ export default function LinkPage() {
       <Band tone="white">
         <SectionHeading className="max-w-3xl">How the framework gets worked.</SectionHeading>
         <p className="prose-body mt-7 max-w-3xl text-lg text-navy/80">
-          L.I.N.K. is how the Focus10 gets worked. The framework names where to grow; these four
-          practices are how a room grows together.
+          L.I.N.K. is how The Focus10 gets worked. The framework names where you grow. These four
+          practices are how the room grows together. BusinessGPS is where it happens.
         </p>
       </Band>
 

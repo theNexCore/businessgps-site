@@ -1,17 +1,11 @@
-import {
-  legend,
-  markers,
-  quarters,
-  WEEKS_IN_QUARTER,
-  WEEKS_IN_YEAR,
-  YEAR_CLOSES,
-  YEAR_OPENS,
-} from "@/data/year";
+import { legend, markers, quarters, WEEKS_IN_QUARTER, WEEKS_IN_YEAR } from "@/data/year";
 
 /**
  * The year wheel: four thirteen-week quarters, the socials and givebacks that
- * sit inside them, the annual growth event near year-end, and leadership
- * turnover on the year boundary.
+ * sit inside them, and the annual growth event near year-end.
+ *
+ * Leadership turnover is deliberately not shown — that context lives on
+ * /chapters/leadership only.
  *
  * Sibling of the meeting wheel — hand-built inline SVG, proportional arcs, no
  * chart library. Structure only; it never prints calendar dates.
@@ -70,13 +64,7 @@ export function YearWheel({ className = "" }: { className?: string }) {
   const description =
     "The BusinessGPS year: four quarters of " +
     WEEKS_IN_QUARTER +
-    " weeks, opening " +
-    YEAR_OPENS +
-    " and closing " +
-    YEAR_CLOSES +
-    ". Each quarter carries a social and a giveback; the annual growth event falls near year-end; leadership turns over on " +
-    YEAR_CLOSES +
-    ".";
+    " weeks. Each quarter carries a social and a giveback, and the annual growth event falls near year-end.";
 
   return (
     <svg
@@ -134,18 +122,6 @@ export function YearWheel({ className = "" }: { className?: string }) {
         return <circle key={"marker-" + index} cx={point.x} cy={point.y} r="7.5" fill={marker.hex} />;
       })}
 
-      {/* The year boundary, at the top: leadership turns over here. */}
-      <line
-        x1={polar(INNER - 8, 0).x}
-        y1={polar(INNER - 8, 0).y}
-        x2={polar(MARKER_RADIUS + 12, 0).x}
-        y2={polar(MARKER_RADIUS + 12, 0).y}
-        stroke="#001749"
-        strokeWidth="2.5"
-        strokeDasharray="4 3"
-      />
-      <circle cx={polar(MARKER_RADIUS, 0).x} cy={polar(MARKER_RADIUS, 0).y} r="9" fill="#FFFFFF" stroke="#001749" strokeWidth="2.5" />
-
       <text x={CENTER} y={CENTER - 20} textAnchor="middle" fontSize="12" fontWeight="700" fill="#001749">
         ONE YEAR
       </text>
@@ -173,12 +149,6 @@ export function YearLegend({ className = "" }: { className?: string }) {
                   fill={entry.hex}
                 />
               </svg>
-            ) : entry.kind === "turnover" ? (
-              <span
-                className="mt-1.5 h-3.5 w-3.5 shrink-0 rounded-full border-[3px] bg-white"
-                style={{ borderColor: entry.hex }}
-                aria-hidden="true"
-              />
             ) : (
               <span
                 className="mt-1.5 h-3.5 w-3.5 shrink-0 rounded-full"
@@ -193,9 +163,6 @@ export function YearLegend({ className = "" }: { className?: string }) {
           </li>
         ))}
       </ul>
-      <p className="prose-body mt-7 text-navy/70">
-        The year opens {YEAR_OPENS} and closes {YEAR_CLOSES}.
-      </p>
     </div>
   );
 }

@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import { BrandArc, CompassPoint, TealArc } from "@/components/BrandGeometry";
 import { CTAPanel } from "@/components/CTAPanel";
 import { AccentStrip, Band, Container, Eyebrow, SectionHeading } from "@/components/ui";
-import { YEAR_CLOSES } from "@/data/year";
 
 export const metadata: Metadata = {
   title: "Chapter Leadership",
   description:
-    "Every BusinessGPS chapter is led by its own members. Eight seats, terms running the fiscal year, turnover every October 31.",
+    "Every BusinessGPS chapter is led by its own members. Eight seats, each turning over yearly, with succession by nomination.",
   alternates: { canonical: "/chapters/leadership" },
 };
 
@@ -15,7 +14,12 @@ const seats = [
   { name: "Chapter Lead", body: "Owns the room and the standard." },
   { name: "Onboarding Facilitator", body: "Every new member's first thirteen weeks." },
   { name: "Chapter Coach", body: "Develops the members developing everyone else." },
-  { name: "Growth Keeper", body: "Tracks referrals, results, and the numbers that can be counted." },
+  {
+    name: "Growth Keeper",
+    body: "Tracks referrals, results, and the numbers that can be counted.",
+    detail:
+      "Tracking is one of the ten focus areas — the framework itself insists results get counted. This seat owns referral results and the numbers that can be counted, in every chapter.",
+  },
   {
     name: "Community Coordinator",
     body: "The giveback and the chapter's presence in its community.",
@@ -56,6 +60,11 @@ export default function ChapterLeadershipPage() {
                 <div>
                   <h2 className="text-xl font-extrabold tracking-tight text-navy">{seat.name}</h2>
                   <p className="prose-body mt-2 text-navy/75">{seat.body}</p>
+                  {"detail" in seat && seat.detail ? (
+                    <p className="prose-body mt-3 border-l-2 border-teal pl-4 text-navy/70">
+                      {seat.detail}
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </li>
@@ -71,8 +80,7 @@ export default function ChapterLeadershipPage() {
           </div>
           <div>
             <p className="prose-body text-lg text-navy/80">
-              Terms run the fiscal year. Every seat turns over {YEAR_CLOSES}. Succession by
-              nomination.
+              Terms run the year. Every seat turns over yearly. Succession by nomination.
             </p>
             <p className="prose-body mt-6 text-lg text-navy/80">
               Leadership is development &mdash; holding a seat is one of the fastest ways to grow

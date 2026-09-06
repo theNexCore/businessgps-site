@@ -76,7 +76,7 @@ export function AccentStrip({
 export function Eyebrow({ children, tone = "dark" }: { children: ReactNode; tone?: "dark" | "light" }) {
   return (
     <p
-      className={`mb-4 text-xs font-bold uppercase tracking-[0.2em] ${
+      className={`mb-4 text-eyebrow font-bold uppercase tracking-[0.2em] ${
         tone === "light" ? "text-teal" : "text-blue"
       }`}
     >
@@ -160,6 +160,7 @@ export function Band({
   top = true,
   bottom = true,
   width = "default",
+  backdrop,
 }: {
   children: ReactNode;
   tone?: "white" | "wash" | "navy";
@@ -168,6 +169,8 @@ export function Band({
   top?: boolean;
   bottom?: boolean;
   width?: "default" | "narrow";
+  /** Renders at section level, behind the container — for full-bleed art. */
+  backdrop?: ReactNode;
 }) {
   const tones = {
     white: "bg-white",
@@ -183,6 +186,7 @@ export function Band({
       id={id}
       className={`relative overflow-hidden ${tones[tone]} ${paddingTop} ${paddingBottom} ${className}`}
     >
+      {backdrop}
       <Container width={width} className="relative z-10">
         {children}
       </Container>

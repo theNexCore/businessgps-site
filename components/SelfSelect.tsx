@@ -60,8 +60,8 @@ export function SelfSelect({ heading = "Is BusinessGPS for you?" }: { heading?: 
         <Column title="You don't want:" items={dontWants} tone="dont" />
       </div>
       <p className="mt-14 max-w-4xl text-balance text-2xl font-extrabold leading-tight tracking-tight text-navy sm:text-3xl">
-        We know &mdash; because that&rsquo;s what we wanted. When we couldn&rsquo;t find it, we built it
-        from scratch. <span className="text-blue">Ten years running.</span>
+        We know &mdash; because those are the exact things we didn&rsquo;t want. When we couldn&rsquo;t
+        find it, we built it from scratch. <span className="text-blue">Now ten years running.</span>
       </p>
     </div>
   );

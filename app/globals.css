@@ -19,6 +19,10 @@
   --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
 
   --radius-panel: 1.5rem;
+
+  /* Section eyebrow labels. One token, site-wide (v2.1: +25% over the old 0.75rem). */
+  --text-eyebrow: 0.9375rem;
+  --text-eyebrow--line-height: 1.3;
 }
 
 @layer base {

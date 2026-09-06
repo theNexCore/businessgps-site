@@ -59,7 +59,15 @@ function buildSlices(): Slice[] {
   });
 }
 
-export function MeetingWheel({ className = "" }: { className?: string }) {
+export function MeetingWheel({
+  className = "",
+  maxWidth = "max-w-[340px]",
+}: {
+  className?: string;
+  /** Own prop, not a className override: competing max-w utilities resolve by
+   *  stylesheet order rather than class order. */
+  maxWidth?: string;
+}) {
   const slices = buildSlices();
   const description = meetingBlocks
     .map((block) => `${block.name}, ${block.duration}`)
@@ -70,7 +78,7 @@ export function MeetingWheel({ className = "" }: { className?: string }) {
       viewBox={`0 0 ${SIZE} ${SIZE}`}
       role="img"
       aria-label={`How a ${TOTAL_MINUTES}-minute BusinessGPS meeting runs: ${description}. Hard stop at ${TOTAL_MINUTES} minutes.`}
-      className={`h-auto w-full max-w-[340px] ${className}`}
+      className={`h-auto w-full ${maxWidth} ${className}`}
     >
       {slices.map((slice) => (
         <path key={slice.block.number} d={slice.path} fill={slice.block.hex} />

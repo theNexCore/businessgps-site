@@ -7,31 +7,45 @@
  */
 
 /**
- * A fragment of the compass ring, meant to bleed off a section corner.
- * `position` picks the corner; the arc is clipped by the section's overflow.
+ * The compass mark, meant to bleed off a section corner.
+ *
+ * Always drawn with its four points: rings on their own read as random
+ * circles rather than as the brand's mark, so the star is not optional here.
+ * `position` picks the corner; the mark is clipped by the section's overflow.
  */
 export function BrandArc({
   position = "top-right",
   tone = "navy",
   size = 460,
+  core = false,
   className = "",
 }: {
   position?: "top-right" | "top-left" | "bottom-right" | "bottom-left";
   tone?: "navy" | "teal" | "white";
   size?: number;
+  /** Draws the blue centre element, so the mark reads on a light ground. */
+  core?: boolean;
   className?: string;
 }) {
   const stroke =
     tone === "white" ? "rgba(255,255,255,0.16)" : tone === "teal" ? "rgba(1,166,194,0.35)" : "rgba(0,23,73,0.10)";
+  const points =
+    tone === "white" ? "rgba(255,255,255,0.13)" : tone === "teal" ? "rgba(1,166,194,0.28)" : "rgba(0,23,73,0.08)";
 
   // Fixed offsets, not percentages: on a tall section a percentage offset
-  // drifts the arc into the middle of the copy instead of hugging the corner.
+  // drifts the mark into the middle of the copy instead of hugging the corner.
   const corner = {
     "top-right": "-top-40 -right-40",
     "top-left": "-top-40 -left-40",
     "bottom-right": "-bottom-40 -right-40",
     "bottom-left": "-bottom-40 -left-40",
   }[position];
+
+  // Four-point star reaching the outer ring, plus shorter diagonal points.
+  const star =
+    "M100 2 L112 88 L198 100 L112 112 L100 198 L88 112 L2 100 L88 88 Z";
+  const diagonals =
+    "M100 100 L152 48 L128 118 Z M100 100 L48 152 L72 82 Z M100 100 L152 152 L82 128 Z M100 100 L48 48 L118 72 Z";
 
   return (
     <svg
@@ -44,6 +58,14 @@ export function BrandArc({
       <circle cx="100" cy="100" r="92" fill="none" stroke={stroke} strokeWidth="1.5" />
       <circle cx="100" cy="100" r="68" fill="none" stroke={stroke} strokeWidth="1.5" />
       <circle cx="100" cy="100" r="44" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <path d={diagonals} fill={points} />
+      <path d={star} fill="none" stroke={stroke} strokeWidth="1.5" strokeLinejoin="round" />
+      {core ? (
+        <>
+          <circle cx="100" cy="100" r="22" fill="rgba(0,95,254,0.22)" />
+          <circle cx="100" cy="100" r="22" fill="none" stroke="rgba(0,95,254,0.55)" strokeWidth="2" />
+        </>
+      ) : null}
     </svg>
   );
 }

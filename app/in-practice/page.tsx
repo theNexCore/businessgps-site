@@ -1,24 +1,23 @@
 import type { Metadata } from "next";
 import { BrandArc, CompassPoint, TealArc } from "@/components/BrandGeometry";
 import { CTAPanel } from "@/components/CTAPanel";
+import { MeetingBlocks } from "@/components/MeetingBlocks";
 import { MeetingWheel } from "@/components/MeetingWheel";
 import { PhotoTile } from "@/components/PhotoTile";
 import { YearLegend, YearWheel } from "@/components/YearWheel";
 import { AccentStrip, Band, Container, Eyebrow, SectionHeading } from "@/components/ui";
-import { meetingBlocks, TOTAL_MINUTES } from "@/data/meeting";
+import { TOTAL_MINUTES } from "@/data/meeting";
 import { photoSets } from "@/data/photos";
-import { WEEKS_IN_QUARTER } from "@/data/year";
 
 export const metadata: Metadata = {
   title: "In Practice",
   description:
-    "What it looks like in practice: the meeting, the quarter, and the year. Seventy minutes hard stop, thirteen-week cycles, four quarters.",
+    "What it looks like in practice: the meeting and the year. Seventy minutes hard stop, thirteen-week cycles, four quarters.",
   alternates: { canonical: "/in-practice" },
 };
 
 const anchors = [
   { href: "#the-meeting", label: "The Meeting" },
-  { href: "#the-quarter", label: "The Quarter" },
   { href: "#the-year", label: "The Year" },
 ];
 
@@ -74,38 +73,17 @@ export default function InPracticePage() {
         </div>
       </Band>
 
+      {/* The dial sits left and enlarged; the blocks stack to its right. */}
       <Band tone="wash">
         <Eyebrow>The meeting</Eyebrow>
         <SectionHeading className="max-w-2xl">Five blocks, in this order.</SectionHeading>
 
-        <div className="mt-12 flex justify-center">
-          <MeetingWheel />
+        <div className="mt-12 grid items-center gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1fr)] lg:gap-16">
+          <div className="flex justify-center lg:justify-start">
+            <MeetingWheel maxWidth="max-w-[420px] lg:max-w-[460px]" />
+          </div>
+          <MeetingBlocks />
         </div>
-
-        <ol className="mt-14 space-y-px overflow-hidden rounded-2xl border border-faint bg-faint">
-          {meetingBlocks.map((block) => (
-            <li key={block.number} className="bg-white px-6 py-8 sm:px-9 sm:py-10">
-              <div className="grid gap-4 sm:grid-cols-[auto_minmax(0,1fr)] sm:gap-8">
-                <div className="flex items-start gap-4">
-                  <span
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-base font-extrabold text-white"
-                    style={{ backgroundColor: block.hex }}
-                    aria-hidden="true"
-                  >
-                    {block.number}
-                  </span>
-                  <div className="sm:w-52">
-                    <h3 className="text-xl font-extrabold tracking-tight text-navy">{block.name}</h3>
-                    <p className="mt-1 text-sm font-bold uppercase tracking-[0.14em] text-navy/65">
-                      {block.duration}
-                    </p>
-                  </div>
-                </div>
-                <p className="prose-body text-navy/75">{block.detail}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
 
         <p className="mt-8 text-lg font-extrabold tracking-tight text-redink">
           {TOTAL_MINUTES} minutes. Then the room ends.
@@ -137,54 +115,15 @@ export default function InPracticePage() {
         </div>
       </Band>
 
-      {/* ---------- THE QUARTER ---------- */}
-      <Band tone="white" id="the-quarter">
-        <Eyebrow>The quarter</Eyebrow>
-        <SectionHeading className="max-w-3xl">
-          Thirteen weeks, everywhere at once.
-        </SectionHeading>
-        <TealArc className="mt-5 w-40" />
-
-        <div className="mt-10 grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <div>
-            <p className="prose-body text-lg text-navy/80">
-              BusinessGPS runs on a {WEEKS_IN_QUARTER}-week growth cycle. Every chapter runs the same
-              curriculum in the same week. Visit another city, and you&rsquo;ll recognize the room
-              immediately &mdash; while every chapter keeps its own personality.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-1.5" aria-hidden="true">
-              {Array.from({ length: WEEKS_IN_QUARTER }, (_, index) => (
-                <span
-                  key={index}
-                  className="flex h-9 w-9 items-center justify-center rounded-md bg-wash text-xs font-bold text-navy/70"
-                >
-                  {index + 1}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <ul className="space-y-5">
-            <li className="rounded-2xl border border-faint bg-wash p-7">
-              <h3 className="text-xl font-extrabold tracking-tight text-navy">Quarterly social</h3>
-              <p className="prose-body mt-2 text-navy/75">No agenda.</p>
-            </li>
-            <li className="rounded-2xl border border-faint bg-wash p-7">
-              <h3 className="text-xl font-extrabold tracking-tight text-navy">Quarterly giveback</h3>
-              <p className="prose-body mt-2 text-navy/75">
-                A quarterly opportunity to be involved with the community. The chapter votes where it
-                goes.
-              </p>
-            </li>
-          </ul>
-        </div>
-      </Band>
-
       {/* ---------- THE YEAR ---------- */}
       <Band tone="wash" id="the-year">
         <BrandArc position="top-left" tone="navy" size={520} />
         <Eyebrow>The year</Eyebrow>
-        <SectionHeading className="max-w-3xl">Four quarters, one turnover.</SectionHeading>
+        <SectionHeading className="max-w-3xl">Four quarters, thirteen weeks each.</SectionHeading>
+        <TealArc className="mt-5 w-40" />
+        <p className="prose-body mt-8 max-w-3xl text-lg text-navy/80">
+          The same curriculum at any BusinessGPS chapter at any given time.
+        </p>
 
         <div className="mt-12 grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="flex justify-center">

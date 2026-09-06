@@ -249,8 +249,14 @@ export function HeaderShell({
               <Link
                 href="/"
                 aria-label="BusinessGPS, home"
-                className="inline-flex rounded-md transition-all duration-300"
-                style={{ width: condensed ? 172 : 252 }}
+                /* Responsive rather than a fixed width: at 336px the lockup
+                   pushes the hamburger off a 390px screen. */
+                className={
+                  "inline-flex rounded-md transition-all duration-300 " +
+                  (condensed
+                    ? "w-[148px] sm:w-[196px] lg:w-[232px]"
+                    : "w-[184px] sm:w-[252px] lg:w-[336px]")
+                }
               >
                 <span
                   aria-hidden="true"

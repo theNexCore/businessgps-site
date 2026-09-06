@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BrandArc, BrandArrow } from "@/components/BrandGeometry";
+import { FeatheredPhoto } from "@/components/FeatheredPhoto";
 import { FourSquares } from "@/components/FourSquares";
 import { HistoryBand } from "@/components/HistoryBand";
 import { IsntBox } from "@/components/IsntBox";
@@ -68,16 +69,25 @@ export default function HomePage() {
       </section>
 
       {/* 3.2 The hook */}
-      <Band tone="white">
-        <p className="max-w-4xl text-balance text-4xl font-extrabold leading-[1.06] tracking-tight text-navy sm:text-5xl lg:text-6xl">
+      <Band
+        tone="white"
+        backdrop={
+          <FeatheredPhoto
+            photo={photoSets.hook}
+            className="w-[86%] opacity-35 sm:opacity-60 lg:w-[60%] lg:opacity-100"
+            sizes="(max-width: 1024px) 80vw, 860px"
+          />
+        }
+      >
+        <p className="relative z-10 max-w-4xl text-balance text-4xl font-extrabold leading-[1.06] tracking-tight text-navy sm:text-5xl lg:text-6xl">
           This is not a networking group.
         </p>
-        <BrandArrow className="mt-8" />
-        <p className="prose-body mt-6 max-w-3xl text-lg text-navy/80">
+        <BrandArrow className="relative z-10 mt-8" />
+        <p className="prose-body relative z-10 mt-6 max-w-3xl text-lg text-navy/80">
           BusinessGPS is a structured weekly event where growth happens &mdash; personal and
           professional. People gather intentionally, to learn and to build real relationships.
         </p>
-        <Button href="/join" variant="red" className="mt-9">
+        <Button href="/join" variant="red" className="relative z-10 mt-9">
           Apply to be a member
         </Button>
       </Band>
@@ -120,7 +130,7 @@ export default function HomePage() {
 
       {/* 3.5 The four practices */}
       <Band tone="wash">
-        <Eyebrow>The four practices</Eyebrow>
+        <Eyebrow>How the whole thing works</Eyebrow>
         <SectionHeading className="mb-10 max-w-2xl">
           Everyone has something to teach. Everyone has something to learn.
         </SectionHeading>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { BrandArc, CompassPoint } from "@/components/BrandGeometry";
+import { BrandArc } from "@/components/BrandGeometry";
 import { CTAPanel } from "@/components/CTAPanel";
 import { Focus10Diagram } from "@/components/Focus10Diagram";
 import { AccentStrip, Band, Container, Eyebrow, SectionHeading } from "@/components/ui";
@@ -75,26 +75,11 @@ export default function Focus10Page() {
         </div>
       </Band>
 
-      <Band tone="wash">
-        <div className="flex max-w-3xl gap-5">
-          <CompassPoint tone="red" size="h-5 w-5" className="mt-2 shrink-0" />
-          <div>
-            <h2 className="text-2xl font-extrabold tracking-tight text-navy sm:text-3xl">
-              Tracking is one of the ten.
-            </h2>
-            <p className="prose-body mt-4 text-navy/80">
-              The framework itself insists results get counted. That is why every chapter carries a
-              Growth Keeper &mdash; the seat that owns referrals, results, and the numbers that can be
-              counted.
-            </p>
-          </div>
-        </div>
-      </Band>
-
       <Band tone="white">
-        <p className="max-w-3xl text-balance text-3xl font-extrabold leading-tight tracking-tight text-navy sm:text-4xl">
+        <p className="max-w-4xl text-balance text-3xl font-extrabold leading-tight tracking-tight text-navy sm:text-4xl">
           The Focus10 is the framework.{" "}
-          <span className="text-blue">BusinessGPS is the environment.</span>
+          <span className="text-blue">BusinessGPS is the environment.</span>{" "}
+          <span className="text-teal">L.I.N.K. is what connects it all.</span>
         </p>
       </Band>
 

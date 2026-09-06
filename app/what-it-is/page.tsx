@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { BrandArc, BrandArrow, TealArc } from "@/components/BrandGeometry";
 import { CTAPanel } from "@/components/CTAPanel";
+import { HappensThere } from "@/components/HappensThere";
 import { SelfSelect } from "@/components/SelfSelect";
 import { AccentStrip, Band, Container, Eyebrow, SectionHeading } from "@/components/ui";
 
@@ -10,21 +11,6 @@ export const metadata: Metadata = {
     "A structured weekly event where growth happens — up to thirty business owners and professionals, one per industry, seventy minutes, hard stop.",
   alternates: { canonical: "/what-it-is" },
 };
-
-const happens = [
-  {
-    title: "You learn.",
-    body: "A synchronized curriculum, thirteen weeks at a time.",
-  },
-  {
-    title: "You build.",
-    body: "Real relationships with people who know your name and your business.",
-  },
-  {
-    title: "You grow.",
-    body: "Personally and professionally, on purpose.",
-  },
-];
 
 const costs = [
   "$59.95 a month, month to month.",
@@ -56,8 +42,8 @@ export default function WhatItIsPage() {
         <SectionHeading className="max-w-3xl">What you walk into.</SectionHeading>
         <TealArc className="mt-5 w-40" />
         <p className="prose-body mt-8 max-w-3xl text-lg text-navy/80">
-          A room of up to thirty business owners and professionals &mdash; one per industry. The same
-          day and time every week. Seventy minutes, hard stop.
+          A room of people committed to growth &mdash; their own, and everyone else&rsquo;s. What you
+          walk out with is almost impossible to measure.
         </p>
         <BrandArrow className="mt-9" />
       </Band>
@@ -65,15 +51,7 @@ export default function WhatItIsPage() {
       {/* What happens there */}
       <Band tone="wash">
         <Eyebrow>What happens there</Eyebrow>
-        <SectionHeading className="mb-10 max-w-2xl">Three things, every week.</SectionHeading>
-        <ul className="grid gap-5 md:grid-cols-3">
-          {happens.map((item) => (
-            <li key={item.title} className="rounded-2xl border border-faint bg-white p-8">
-              <h3 className="text-2xl font-extrabold tracking-tight text-navy">{item.title}</h3>
-              <p className="prose-body mt-3 text-navy/75">{item.body}</p>
-            </li>
-          ))}
-        </ul>
+        <HappensThere />
       </Band>
 
       {/* What it costs */}
@@ -82,8 +60,14 @@ export default function WhatItIsPage() {
           <div>
             <Eyebrow>What it costs</Eyebrow>
             <SectionHeading>
-              $59<span className="align-super text-3xl text-redink sm:text-4xl">95</span> a month.
+              can be measured. What you get can&rsquo;t be.
             </SectionHeading>
+            <p className="mt-8 text-5xl font-extrabold leading-none tracking-tighter text-navy sm:text-6xl">
+              $59<span className="align-super text-2xl text-redink sm:text-3xl">95</span>
+              <span className="ml-3 align-middle text-base font-bold uppercase tracking-[0.18em] text-navy/60">
+                a month
+              </span>
+            </p>
           </div>
           <ul className="space-y-4">
             {costs.map((cost) => (

@@ -60,6 +60,8 @@ function frame(index: number): Photo {
  * never hero photography.
  */
 export const photoSets = {
+  /** Home: feathered behind the "not a networking group" hook. */
+  hook: candid[7],
   /** Home: the group portrait beside "This room asks something of you." */
   homeRequirements: frame(21),
   /** Home: the strip in the history band. */
