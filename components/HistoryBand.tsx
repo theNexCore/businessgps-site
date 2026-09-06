@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { PhotoTile } from "./PhotoTile";
 import { AccentStrip } from "./ui";
-import { photoPlacements } from "@/data/photos";
+import { photoSets } from "@/data/photos";
 
 const beats = [
   {
@@ -19,7 +20,7 @@ const beats = [
 
 export function HistoryBand() {
   return (
-    <div className="rounded-panel border border-faint bg-wash px-6 py-12 sm:px-12 sm:py-14">
+    <div>
       <AccentStrip className="max-w-[140px]" />
       <ol className="mt-9 grid gap-9 md:grid-cols-3 md:gap-10">
         {beats.map((beat) => (
@@ -29,11 +30,19 @@ export function HistoryBand() {
           </li>
         ))}
       </ol>
+
       <div className="mt-11 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {photoPlacements.historyBand.map((photo) => (
+        {photoSets.homeHistory.map((photo) => (
           <PhotoTile key={photo.file} photo={photo} className="aspect-[3/2]" />
         ))}
       </div>
+
+      <Link
+        href="/history"
+        className="mt-9 inline-flex font-bold text-blue underline underline-offset-4"
+      >
+        Read the history
+      </Link>
     </div>
   );
 }

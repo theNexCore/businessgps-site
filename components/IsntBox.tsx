@@ -1,7 +1,10 @@
 import { NavyPanel, SectionHeading } from "./ui";
 
 const items = [
-  { title: "Not a referral quota group.", body: "No scorecards. Nobody counting." },
+  {
+    title: "Not a referral quota group.",
+    body: "Referrals are tracked, never demanded. No scorecards ranking you.",
+  },
   { title: "Not a classroom.", body: "No instructor at the front, no audience." },
   { title: "Not a mixer.", body: "Handing cards to strangers isn't the point." },
   { title: "Not a contract.", body: "Month to month. Nothing to sign away." },

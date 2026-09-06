@@ -1,8 +1,11 @@
-Chapter photos, 2018-2019 St. Louis chapters.
+Chapter photos, 2018-2019 St. Louis rooms.
 
-These filenames are listed in data/photos.ts, which is what every photo
-surface on the site reads from. To add a photo, drop the file here and add
-an entry. To retire one, remove its entry.
+bgps-photo-01.jpg … bgps-photo-09.jpg   candid meeting shots
+bgps-photo-10.jpg … bgps-photo-17.jpg   group and event shots
 
-Photos always render under a soft navy overlay (components/PhotoTile.tsx)
-so the archive-era image quality reads as intentional.
+These are the only image filenames that may appear in the code. Which photo
+appears where is decided by `photoSets` in data/photos.ts — change a value
+there, not in a component.
+
+Photos always render under a soft navy overlay (components/PhotoTile.tsx) so
+the archive-era image quality reads as intentional.

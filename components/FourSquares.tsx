@@ -22,13 +22,13 @@ export function FourSquares({ withLink = true }: { withLink?: boolean }) {
         ))}
       </ul>
       <p className="prose-body mt-7 max-w-2xl text-navy/75">
-        Four practices, taught and practiced in BusinessGPS rooms since 2017. They&rsquo;re the working
-        muscles of The Focus10.
+        Four practices, taught in BusinessGPS rooms since 2017. They&rsquo;re the working muscles of
+        The Focus10.
         {withLink ? (
           <>
             {" "}
-            <Link href="/focus10" className="font-semibold text-blue underline underline-offset-4">
-              See The Focus10
+            <Link href="/philosophy/link" className="font-semibold text-blue underline underline-offset-4">
+              See L.I.N.K.
             </Link>
             .
           </>

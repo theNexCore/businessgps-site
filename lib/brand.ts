@@ -2,30 +2,22 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 
 /**
- * Inlines the supplied Illustrator lockups so they can be recoloured for navy
- * panels without needing a second asset.
+ * Inlines the supplied Illustrator lockups.
  *
- * Two things have to happen to the exported artwork first:
+ * The lockup is ALWAYS full-colour, on white or light backgrounds only. There
+ * is deliberately no inverted/white variant here: a dark section that needs
+ * branding uses typography and spacing instead (see <BizGPS />). Removing the
+ * recolour path is what keeps that rule from quietly regressing.
  *
- * 1. Illustrator styles the shapes with a `<style>` block of generic classes
- *    (.st0, .st1 …). Inlined, that CSS is global — a second copy of the lockup
- *    would fight the first — and its text shows up in the document's text
- *    content. So the rules are flattened onto the elements as presentation
- *    attributes and the `<style>` block is dropped.
- *
- * 2. The artwork is dark-on-light: "Business" is navy (#001749), "GPS" is red,
- *    and the compass uses a white-to-navy radial gradient. For navy panels only
- *    the flat navy fills are repainted white, so the red italic "GPS" and the
- *    compass keep their brand colours. A blanket brightness/invert filter would
- *    flatten both away, and recolouring the gradient stops would make the
- *    compass glow instead of settling into the panel.
- *
- * Gradient ids are still namespaced per variant so several inlined copies on
- * one page cannot collide.
+ * Illustrator emits generic class names (.st0, .st1 …) in a <style> block.
+ * Inlined, that CSS is document-global — a second copy of the artwork would
+ * fight the first — and its text lands in the page's text content. So the
+ * rules are flattened onto the elements as presentation attributes and the
+ * <style> block is dropped. Gradient ids are namespaced per asset so several
+ * copies on one page cannot collide.
  */
 
 export type BrandAsset = "lockup" | "mark";
-export type BrandTone = "dark" | "light";
 
 /** viewBox width / height for each asset — drives the aspect-ratio boxes. */
 export const brandAspect: Record<BrandAsset, number> = {
@@ -33,7 +25,6 @@ export const brandAspect: Record<BrandAsset, number> = {
   mark: 1343.82 / 1254,
 };
 
-const NAVY = "#001749";
 const cache = new Map<string, string>();
 
 /** Parses `.st1, .st2 { fill: none; stroke: #001749 }` into a class → attrs map. */
@@ -72,9 +63,8 @@ function escapeAttr(value: string): string {
   return value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 }
 
-export function brandSvg(asset: BrandAsset, tone: BrandTone): string {
-  const key = `${asset}:${tone}`;
-  const cached = cache.get(key);
+export function brandSvg(asset: BrandAsset): string {
+  const cached = cache.get(asset);
   if (cached) return cached;
 
   const file = path.join(process.cwd(), "public", "brand", `${asset}.svg`);
@@ -86,7 +76,6 @@ export function brandSvg(asset: BrandAsset, tone: BrandTone): string {
   const rules = styleBlock ? parseStyleRules(styleBlock[1]) : new Map();
   if (styleBlock) svg = svg.replace(styleBlock[0], "");
 
-  // Flatten the class rules onto the elements themselves.
   svg = svg.replace(/\sclass="([^"]+)"/g, (_match, classList: string) => {
     const attrs = new Map<string, string>();
     for (const className of classList.trim().split(/\s+/)) {
@@ -95,29 +84,21 @@ export function brandSvg(asset: BrandAsset, tone: BrandTone): string {
       for (const [property, value] of declarations) attrs.set(property, value);
     }
     if (attrs.size === 0) return "";
-
-    return [...attrs]
-      .map(([property, value]) => {
-        const painted =
-          tone === "light" && value.toLowerCase() === NAVY ? "#ffffff" : value;
-        return ` ${property}="${escapeAttr(painted)}"`;
-      })
-      .join("");
+    return [...attrs].map(([property, value]) => ` ${property}="${escapeAttr(value)}"`).join("");
   });
 
-  const namespace = `${asset === "lockup" ? "lk" : "mk"}${tone === "light" ? "l" : "d"}`;
+  const namespace = asset === "lockup" ? "lk" : "mk";
   svg = svg
     .replace(/radial-gradient/g, `${namespace}rg`)
     .replace(/id="Layer_1"/g, `id="${namespace}-layer"`)
     .trim();
 
-  // The wrapper controls size and carries the accessible name, so the SVG
-  // itself is decorative.
+  // The wrapper controls size and carries the accessible name.
   svg = svg.replace(
     /<svg\s/,
     '<svg aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid meet" style="display:block;width:100%;height:100%" ',
   );
 
-  cache.set(key, svg);
+  cache.set(asset, svg);
   return svg;
 }

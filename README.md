@@ -4,7 +4,7 @@ The production website for **BusinessGPS**, a weekly business growth community r
 St. Louis.
 
 Static-first Next.js: no database, no auth, no CMS. Everything a non-technical editor needs to
-change lives in one of three data files.
+change lives in one of four data files.
 
 ---
 
@@ -24,6 +24,29 @@ npm run lint         # eslint
 ```
 
 Node 20+ is required (built and tested on Node 24).
+
+---
+
+## Sitemap
+
+```
+/                      Home
+/what-it-is            What It Is          — the stranger's page
+/philosophy            Philosophy          — the pillars
+/philosophy/focus10    The Focus10         — the framework
+/philosophy/link       L.I.N.K.            — the four practices
+/in-practice           In Practice         — the meeting, the quarter, the year
+/chapters              Chapters            — find / apply / launch
+/chapters/leadership   Chapter Leadership  — the eight seats
+/history               History
+/join                  Apply (+ /thanks)
+```
+
+`/how-it-works` → `/in-practice` and `/focus10` → `/philosophy/focus10` are permanent redirects
+(`next.config.ts`).
+
+**Wording:** the verb is always **Apply** / **Apply to be a member**. "Join" survives only as the
+`/join` route path, never as UI copy.
 
 ---
 
@@ -61,51 +84,60 @@ placeholder style automatically.
 ```
 
 While `live: false`, the card shows *"Quote coming — Lewis Marty has been asked."* To publish a
-quote: paste it into `quote` and set `live: true`. Reserve entries are commented out at the bottom
-of the file — uncomment to bring one into rotation.
+quote: paste it into `quote` and set `live: true`. Cards show name and business only.
 
 ### The meeting wheel — `data/meeting.ts`
 
 The five blocks, their durations, colours and arc weights. Single source of truth for the wheel on
-both `/` and `/how-it-works`, and for the expanded block descriptions.
+`/` and `/in-practice`, and for the expanded block descriptions.
 
 `weight` controls the size of each arc. It is **not** a duration — `duration` is a display string.
 The wheel shows durations only; it must never display a clock time.
 
+### The year wheel — `data/year.ts`
+
+Four quarters of thirteen weeks, the socials and givebacks inside them, the annual growth event
+near year-end, and leadership turnover on the year boundary. The fiscal year opens the week of
+November 1 and closes October 31.
+
+`markers[].at` is a position around the ring from 0 to 1, measured clockwise from the year
+boundary — structure, not calendar dates.
+
 ### Chapter photos — `data/photos.ts`
 
-Twenty-one archive photos (2017-2019) live in `public/photos/`. The file has two
-parts:
+Seventeen archive photos live in `public/photos/` as `bgps-photo-01.jpg` … `bgps-photo-17.jpg`
+(01–09 candid meeting shots, 10–17 group and event shots). **These are the only image filenames
+that may appear anywhere in the code.**
 
-- `photos` — the library. Each entry is a filename plus its alt text.
-- `photoPlacements` — which photo appears where on the site.
+The file has two parts:
 
-**To feature a different image, change one value in `photoPlacements`.** No
-component needs editing:
+- `photos` / `candid` / `groups` — the library.
+- `photoSets` — which photos appear where.
+
+**To feature a different image, change one value in `photoSets`.** No component needs editing:
 
 ```ts
-export const photoPlacements = {
-  homeAsks: photos.groupPortrait,        // Home, beside "This room asks something of you."
-  historyBand: [ /* four-across strip */ ],
-  showUpEarly: photos.archive05,         // How It Works, "Show up early."
-  guestPanel: photos.twoInConversation,  // How It Works, guest expectations
-  chaptersStrip: [ /* four-across strip */ ],
+export const photoSets = {
+  homeRequirements: candid[4],     // Home, beside "This room asks something of you."
+  homeHistory: [...],              // Home, the history-band strip
+  showUpEarly: candid[0],          // /in-practice, "Show up early."
+  guestPanel: candid[3],           // /in-practice, guest expectations
+  chapters: [...],                 // /chapters, two-up strip
+  history: [...],                  // /history, the narrative gallery
 };
 ```
 
-The source photos are 2:1 panoramas. Feature tiles use `aspect-[2/1]` so nothing
-is cropped away; the four-across strips use `aspect-[3/2]` for a tidier grid.
-
 Photos always render under a soft navy overlay with a light desaturation
-(`components/PhotoTile.tsx` and the `.photo-archive` utility) so the archive-era
-image quality reads as intentional rather than as poor design.
+(`components/PhotoTile.tsx` and the `.photo-archive` utility) so the archive-era image quality
+reads as intentional rather than as poor design. Never full-bleed sharp-focus hero images.
 
-`photosAvailable` at the top of the file can be set to `false` to fall back to
-marked placeholders if the folder is ever emptied.
+`photosAvailable` can be set to `false` to fall back to marked placeholders.
 
 ---
 
-## Brand assets
+## Brand
+
+### The lockup
 
 | Path | What it is |
 | --- | --- |
@@ -114,28 +146,53 @@ marked placeholders if the folder is ever emptied.
 | `public/brand/lockup.png`, `mark.png` | Raster fallbacks |
 | `public/brand/focus10.png` | The Focus10 outline |
 
-The lockups are **inlined** rather than used as `<img>` (see `lib/brand.ts`). The supplied artwork
-is dark-on-light; on navy panels only the flat navy fills are repainted white, so the red italic
-"GPS" and the compass keep their brand colours. A blanket `brightness(0) invert(1)` filter would
-flatten those away.
+**The lockup is always full-colour, on white or light backgrounds, and is never inverted.** There
+is deliberately no white/inverted variant in `lib/brand.ts` — removing that code path is what keeps
+the rule from quietly regressing. A dark section that needs branding uses typography instead: the
+`<BizGPS />` component (see the footer).
 
-Every lockup on the site renders through `components/Lockup.tsx`. Change it once, it changes
-everywhere.
+The lockup is *inlined* rather than used as an `<img>`: Illustrator emits a `<style>` block of
+generic class names that would be document-global once inlined (and whose CSS text would land in
+the page's text content), so `lib/brand.ts` flattens those rules onto the elements as presentation
+attributes and namespaces the gradient ids.
 
-The Focus10 image is isolated in `components/Focus10Diagram.tsx` — when the SVG redraw arrives,
-swap it there and no page needs editing.
+Every lockup on the site renders through `components/Lockup.tsx` or the header. Change it once, it
+changes everywhere.
 
 ### Wordmark rules
 
 - **BusinessGPS** — one word, camel case. Never "Business GPS", never all caps in prose.
 - Styled as a wordmark: "Business" navy (white on dark), "GPS" **red italic**, Sora bold.
-- For an inline mention inside a paragraph, use the `<BizGPS />` helper — not a rebuilt lockup.
+
+### Brand geometry — `components/BrandGeometry.tsx`
+
+The logo's shapes reused as structural page elements, not decoration:
+
+- `<BrandArc />` — compass ring fragments bleeding off a section corner.
+- `<BrandArrow />` — the red arrow rising left to right, as a divider motif.
+- `<CompassPoint />` — the four-point star, as list bullets and section markers.
+- `<TealArc />` — a thin teal underline arc under key headings.
+
+Every page gets at least one; no page gets more than three. Size is a separate prop on these
+components rather than something passed through `className`, because two competing Tailwind
+`h-`/`w-` utilities resolve by stylesheet order, not class order.
+
+### Colour
+
+Brand colours are Tailwind theme tokens in `app/globals.css`:
+`navy #001749`, `blue #005FFE`, `red #FF0000`, `teal #01A6C2`, `wash #F4F7FB`, `faint #DEE6F2`.
+
+Two extra "ink" tokens exist because the pure brand red and teal fail AA against white text:
+`redink #DF0000` (5.08:1 on white) and `tealink #018197` (4.58:1). **Ink tokens carry white text
+and small coloured text; the pure brand colours stay for graphics** — arcs, squares, the arrow, the
+accent strip, the wordmark.
+
+Headings, UI and numerals are **Sora**. Long-form body paragraphs use the `.prose-body` utility
+(Georgia-first system serif).
 
 ### Open Graph
 
-`app/opengraph-image.tsx` generates the navy OG card at build time and applies to every route. To
-use a committed static card instead, drop it at `public/brand/og.png`, point `openGraph.images` in
-`app/layout.tsx` at it, and delete that file.
+`app/opengraph-image.tsx` generates the navy OG card at build time and applies to every route.
 
 ---
 
@@ -145,6 +202,8 @@ use a committed static card instead, drop it at `public/brand/og.png`, point `op
   (`components/JoinForm.tsx`). It validates client-side, then redirects to `/thanks`.
 - The chapter dropdown posts the readable label, not the slug, so the notification email reads
   "NexCore South County — Thursdays, 9:30 AM".
+- The form reads `?chapter=` from `window.location` rather than `useSearchParams`, which would put
+  the whole form behind a Suspense boundary and ship a collapsing fallback in the static HTML.
 - `/thanks` links to Square: `https://square.link/u/OWBELtgt` (opens in a new tab). Square handles
   the first payment; members are invoiced monthly after that.
 - Price is **$59.95** everywhere. The only place `$59` appears alone is the large price graphic,
@@ -154,10 +213,15 @@ use a committed static card instead, drop it at `public/brand/og.png`, point `op
 
 ## Deploying to Vercel
 
-1. Push this repository to GitHub.
-2. In Vercel, **New Project → Import** the repo. Framework preset is detected as Next.js; no
-   environment variables and no build-setting changes are needed.
-3. Deploy. Every route is prerendered as static content.
+The project is deployed under the **NexCore** Vercel team as `businessgps-site`.
+
+```bash
+npx vercel deploy --prod --scope nex-core1
+```
+
+Pushes do not deploy automatically yet: Vercel's GitHub App is scoped to selected repositories and
+this repo has not been added. To enable it — **github.com/settings/installations → Vercel →
+Configure → add `businessgps-site`** — then run `npx vercel git connect --scope nex-core1`.
 
 ### DNS last
 
@@ -171,18 +235,21 @@ assumptions, so the cutover is the final step and nothing needs rebuilding for i
 ## Project layout
 
 ```
-app/                    routes: / /how-it-works /focus10 /chapters /join /thanks
+app/                    the ten routes above, plus /thanks
   layout.tsx            Sora font, metadata, header + footer, skip link
   opengraph-image.tsx   build-time OG card
   robots.ts sitemap.ts
-components/             Header, Footer, MeetingWheel, PriceBlock, ChapterCard, …
-data/                   chapters, quotes, meeting, photos
-lib/brand.ts            inlines + recolours the lockup SVGs
+components/
+  Header / HeaderShell / UtilityBar   two-tier sticky header, centred lockup
+  MeetingWheel, YearWheel             hand-built inline SVG, no chart library
+  SelfSelect, PullQuote               shared blocks used on more than one page
+  BrandGeometry                       arcs, arrow, compass points
+  …
+data/                   chapters, quotes, meeting, year, photos
+lib/brand.ts            inlines the lockup SVG
 ```
 
-Brand colours are Tailwind theme tokens defined in `app/globals.css`:
-`navy #001749`, `blue #005FFE`, `red #FF0000`, `teal #01A6C2`, `wash #F4F7FB`, `faint #DEE6F2`.
-Use `bg-navy`, `text-red`, `border-faint`, and so on.
-
-Headings, UI and numerals are **Sora**. Long-form body paragraphs use the `.prose-body` utility
-(Georgia-first system serif).
+`<Band>` in `components/ui.tsx` is the full-bleed section wrapper — background colour runs edge to
+edge with the content in the standard container. Use its `top`/`bottom` props rather than a `pt-0`
+override in `className`: a responsive `sm:pt-24` lives later in the stylesheet than a base `pt-0`,
+so the override silently loses above the breakpoint.

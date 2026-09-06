@@ -146,3 +146,46 @@ export function Section({
     </section>
   );
 }
+
+/**
+ * A full-bleed section: the background colour runs edge to edge and the
+ * content sits in the standard container. This replaces v1's floating rounded
+ * colour boxes for major sections.
+ */
+export function Band({
+  children,
+  tone = "white",
+  className = "",
+  id,
+  top = true,
+  bottom = true,
+  width = "default",
+}: {
+  children: ReactNode;
+  tone?: "white" | "wash" | "navy";
+  className?: string;
+  id?: string;
+  top?: boolean;
+  bottom?: boolean;
+  width?: "default" | "narrow";
+}) {
+  const tones = {
+    white: "bg-white",
+    wash: "bg-wash",
+    navy: "on-navy bg-navy text-white",
+  } as const;
+
+  const paddingTop = top ? "pt-16 sm:pt-24" : "pt-0";
+  const paddingBottom = bottom ? "pb-16 sm:pb-24" : "pb-0";
+
+  return (
+    <section
+      id={id}
+      className={`relative overflow-hidden ${tones[tone]} ${paddingTop} ${paddingBottom} ${className}`}
+    >
+      <Container width={width} className="relative z-10">
+        {children}
+      </Container>
+    </section>
+  );
+}
