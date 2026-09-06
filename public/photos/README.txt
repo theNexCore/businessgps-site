@@ -1,7 +1,10 @@
-Chapter photos, 2018-2019 St. Louis rooms.
+Chapter photos, 2017-2019 St. Louis rooms.
 
-bgps-photo-01.jpg … bgps-photo-09.jpg   candid meeting shots
-bgps-photo-10.jpg … bgps-photo-17.jpg   group and event shots
+bgps-photo-01 … 09, 18 … 20    candid meeting shots
+bgps-photo-10 … 17, 21         group and event shots
+
+18-21 were added after the original seventeen, which is why the two bands
+are not contiguous — renumbering would have churned every reference.
 
 These are the only image filenames that may appear in the code. Which photo
 appears where is decided by `photoSets` in data/photos.ts — change a value

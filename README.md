@@ -105,24 +105,29 @@ boundary — structure, not calendar dates.
 
 ### Chapter photos — `data/photos.ts`
 
-Seventeen archive photos live in `public/photos/` as `bgps-photo-01.jpg` … `bgps-photo-17.jpg`
-(01–09 candid meeting shots, 10–17 group and event shots). **These are the only image filenames
-that may appear anywhere in the code.**
+Twenty-one archive photos live in `public/photos/` as `bgps-photo-01.jpg` … `bgps-photo-21.jpg`.
+**These are the only image filenames that may appear anywhere in the code.**
+
+- `01-09`, `18-20` — candid meeting shots
+- `10-17`, `21` — group and event shots
+
+18-21 were added after the original seventeen, so the two bands are not contiguous; renumbering
+would have churned every reference for no gain.
 
 The file has two parts:
 
 - `photos` / `candid` / `groups` — the library.
-- `photoSets` — which photos appear where.
+- `photoSets` — which photos appear where. `frame(n)` picks a specific file number.
 
 **To feature a different image, change one value in `photoSets`.** No component needs editing:
 
 ```ts
 export const photoSets = {
-  homeRequirements: candid[4],     // Home, beside "This room asks something of you."
+  homeRequirements: frame(21),     // Home, beside "This room asks something of you."
   homeHistory: [...],              // Home, the history-band strip
   showUpEarly: candid[0],          // /in-practice, "Show up early."
-  guestPanel: candid[3],           // /in-practice, guest expectations
-  chapters: [...],                 // /chapters, two-up strip
+  guestPanel: frame(20),           // /in-practice, guest expectations
+  chapters: [frame(19), frame(18)],// /chapters, two-up strip
   history: [...],                  // /history, the narrative gallery
 };
 ```

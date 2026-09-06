@@ -1,9 +1,14 @@
 /**
- * Chapter photo library (2018-2019 St. Louis rooms).
+ * Chapter photo library (2017-2019 St. Louis rooms).
  *
- * Files live in /public/photos/ as bgps-photo-01.jpg … bgps-photo-17.jpg.
- * 01-09 are candid meeting shots; 10-17 are group and event shots.
+ * Files live in /public/photos/ as bgps-photo-01.jpg … bgps-photo-21.jpg.
  * These are the only image filenames that may appear anywhere in the code.
+ *
+ *   01-09, 18-20   candid meeting shots
+ *   10-17, 21      group and event shots
+ *
+ * 18-21 were added after the original seventeen, so they sit outside the
+ * original contiguous banding rather than renumbering every file.
  *
  * `photoSets` decides which photos appear where. Change a value there to
  * feature a different image — no component needs editing.
@@ -20,32 +25,53 @@ export type Photo = {
 const meeting = "BusinessGPS chapter meeting, St. Louis";
 const group = "Members of a BusinessGPS chapter, St. Louis";
 
-function photo(index: number, alt: string): Photo {
-  return { file: `bgps-photo-${String(index).padStart(2, "0")}.jpg`, alt };
+/** Photos specific enough to describe get their own alt text. */
+const described: Record<number, string> = {
+  18: "A small group reviewing notes together at a BusinessGPS meeting",
+  19: "Four BusinessGPS members working around a table, St. Louis",
+  20: "Two members in conversation at a window counter before a BusinessGPS meeting",
+  21: "Members of a St. Louis BusinessGPS chapter together after a meeting",
+};
+
+function photo(index: number, fallback: string): Photo {
+  return {
+    file: `bgps-photo-${String(index).padStart(2, "0")}.jpg`,
+    alt: described[index] ?? fallback,
+  };
 }
 
-/** 01-09: candid meeting shots. */
-export const candid: Photo[] = [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => photo(n, meeting));
+/** Candid meeting shots. */
+export const candid: Photo[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 18, 19, 20].map((n) =>
+  photo(n, meeting),
+);
 
-/** 10-17: group and event shots. */
-export const groups: Photo[] = [10, 11, 12, 13, 14, 15, 16, 17].map((n) => photo(n, group));
+/** Group and event shots. */
+export const groups: Photo[] = [10, 11, 12, 13, 14, 15, 16, 17, 21].map((n) => photo(n, group));
 
 export const photos: Photo[] = [...candid, ...groups];
+
+/** Look a frame up by its file number, for placements that want a specific one. */
+function frame(index: number): Photo {
+  const file = `bgps-photo-${String(index).padStart(2, "0")}.jpg`;
+  const match = photos.find((entry) => entry.file === file);
+  if (!match) throw new Error(`No photo ${file} in the library`);
+  return match;
+}
 
 /**
  * Where photos appear. Kept deliberately sparse: photos are archive texture,
  * never hero photography.
  */
 export const photoSets = {
-  /** Home: one image beside "This room asks something of you." */
-  homeRequirements: candid[4],
+  /** Home: the group portrait beside "This room asks something of you." */
+  homeRequirements: frame(21),
   /** Home: the strip in the history band. */
   homeHistory: [groups[0], candid[1], groups[3], candid[7]],
   /** /in-practice: "Show up early." and the guest panel. */
   showUpEarly: candid[0],
-  guestPanel: candid[3],
+  guestPanel: frame(20),
   /** /chapters: a two-up strip. */
-  chapters: [groups[5], candid[6]],
+  chapters: [frame(19), frame(18)],
   /** /history: the narrative gallery, six to eight images. */
   history: [
     candid[2],
