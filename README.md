@@ -221,9 +221,9 @@ The project is deployed under the **NexCore** Vercel team as `businessgps-site`.
 npx vercel deploy --prod --scope nex-core1
 ```
 
-Pushes do not deploy automatically yet: Vercel's GitHub App is scoped to selected repositories and
-this repo has not been added. To enable it — **github.com/settings/installations → Vercel →
-Configure → add `businessgps-site`** — then run `npx vercel git connect --scope nex-core1`.
+The project is connected to `theNexCore/businessgps-site`, so **every push to `main` deploys to
+production automatically**. The CLI command above is only for an out-of-band deploy — a rebuild
+with no code change, or shipping from a dirty working tree.
 
 ### DNS last
 
