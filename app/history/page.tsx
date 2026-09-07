@@ -8,7 +8,7 @@ import { photoSets } from "@/data/photos";
 export const metadata: Metadata = {
   title: "History",
   description:
-    "BusinessGPS launched its first St. Louis chapter in 2017 and relaunches in 2026 — same beliefs, finally built the way they were meant to fit together.",
+    "BusinessGPS launched its first St. Louis chapter in 2017 and relaunches in 2026. Same beliefs, built to reach even further.",
   alternates: { canonical: "/history" },
 };
 
