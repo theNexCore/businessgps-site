@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { BrandArc, TealArc } from "@/components/BrandGeometry";
 import { CTAPanel } from "@/components/CTAPanel";
 import { FourSquares } from "@/components/FourSquares";
+import { LinkUpdatesForm } from "@/components/LinkUpdatesForm";
 import { AccentStrip, Band, Container, Eyebrow, SectionHeading } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -103,6 +105,19 @@ export default function LinkPage() {
           relationship. Kindle what matters from it, for them and for you. That&rsquo;s the whole
           thing. BusinessGPS is simply where it gets practiced every week.
         </p>
+      </Band>
+
+      {/* For people who want L.I.N.K. without a chapter within reach. */}
+      <Band tone="wash">
+        <p className="prose-body max-w-3xl text-lg text-navy/85">
+          Not close to a BusinessGPS chapter? (
+          <Link href="/chapters" className="font-semibold text-blue underline underline-offset-4">
+            See the chapter list here
+          </Link>
+          .) Still want to build better relationships? Leave your email and we&rsquo;ll send you
+          L.I.N.K. updates.
+        </p>
+        <LinkUpdatesForm />
       </Band>
 
       <Band tone="white" top={false} bottom={false}>

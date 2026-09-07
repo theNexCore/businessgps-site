@@ -75,8 +75,8 @@ export default function HistoryPage() {
               has employees of its own. One of them is a BusinessGPS member.
             </p>
           </blockquote>
-          <figcaption className="mt-6 text-sm font-semibold text-navy/60">
-            TBD: name/permission pending
+          <figcaption className="mt-6 text-sm font-bold uppercase tracking-[0.16em] text-navy/70">
+            Bernadette Corbeil &mdash; Founder, Artemis Construction
           </figcaption>
         </figure>
 

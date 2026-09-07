@@ -1,8 +1,8 @@
 import { TealArc } from "./BrandGeometry";
 
 /**
- * The apple pull-quote. Shared by the home referrals section and /philosophy.
- * Deliberately unattributed.
+ * The apple quote. Shared by the home referrals section and /philosophy, so
+ * the wording and the attribution can never drift between them.
  */
 export function PullQuote({ tone = "dark" }: { tone?: "dark" | "light" }) {
   const light = tone === "light";
@@ -15,14 +15,22 @@ export function PullQuote({ tone = "dark" }: { tone?: "dark" | "light" }) {
             (light ? "text-white" : "text-navy")
           }
         >
-          You can count the number of seeds in an apple, but you can never count the number of
-          apples in a seed.
+          &ldquo;You can always count the number of seeds in an apple, but you can never count the
+          number of apples in a seed.&rdquo;
         </p>
       </blockquote>
       <TealArc className="mt-6" />
-      <figcaption className={"mt-5 text-sm font-semibold " + (light ? "text-white/70" : "text-navy/70")}>
-        The referral is the seed. The orchard is why you&rsquo;re here.
+      <figcaption
+        className={
+          "mt-5 text-sm font-bold uppercase tracking-[0.16em] " +
+          (light ? "text-white/70" : "text-navy/70")
+        }
+      >
+        Darnell Self
       </figcaption>
+      <p className={"prose-body mt-4 text-sm " + (light ? "text-white/70" : "text-navy/70")}>
+        The referral is the seed. The orchard is why you&rsquo;re here.
+      </p>
     </figure>
   );
 }

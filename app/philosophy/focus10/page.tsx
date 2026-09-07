@@ -17,9 +17,9 @@ export const metadata: Metadata = {
  * Layer copy is taken straight off the supplied Focus10 artwork.
  */
 const layers = [
-  { name: "Core", body: "The foundation. Protection, presence, well-being." },
-  { name: "Expression", body: "Purpose, voice, consistency." },
-  { name: "Influence", body: "Processes, associations, tracking." },
+  { name: "Core", body: "Protection, presence, well-being.", href: "#core" },
+  { name: "Expression", body: "Purpose, voice, consistency.", href: "#expression" },
+  { name: "Influence", body: "Processes, associations, tracking.", href: "#influence" },
 ];
 
 /**
@@ -28,9 +28,11 @@ const layers = [
  */
 const categories = [
   {
+    id: "core",
     name: "Core",
     accent: "bg-tealink",
     rule: "border-tealink",
+    tint: "bg-[#01A6C2]/[0.07]",
     intro:
       "Core is a category. It sits intentionally at the bottom. It holds Protection, Presence, and Well-being.",
     elements: [
@@ -51,9 +53,11 @@ const categories = [
     quote: null as { text: string; who: string } | null,
   },
   {
+    id: "expression",
     name: "Expression",
     accent: "bg-redink",
     rule: "border-redink",
+    tint: "bg-[#FF0000]/[0.05]",
     intro:
       "Expression — the way, the how, and the why behind everything you do and say. From the way your brand looks to the way you communicate, and how.",
     elements: [
@@ -75,9 +79,11 @@ const categories = [
     quote: null as { text: string; who: string } | null,
   },
   {
+    id: "influence",
     name: "Influence",
     accent: "bg-blue",
     rule: "border-blue",
+    tint: "bg-[#005FFE]/[0.06]",
     intro:
       "Influence — what drives your choices, your decisions, your successes, and your failures.",
     quote: { text: "Leadership is influence — nothing more, nothing less.", who: "John Maxwell" },
@@ -155,9 +161,19 @@ export default function Focus10Page() {
               <p className="prose-body mt-2 text-navy/75">The center of the framework.</p>
             </li>
             {layers.map((layer) => (
-              <li key={layer.name} className="border-l-4 border-faint pl-6">
-                <p className="text-xl font-extrabold tracking-tight text-navy">{layer.name}</p>
-                <p className="prose-body mt-2 text-navy/75">{layer.body}</p>
+              <li key={layer.name}>
+                <a
+                  href={layer.href}
+                  className="group block cursor-pointer border-l-4 border-faint pl-6 transition-colors hover:border-blue"
+                >
+                  <p className="flex items-center gap-2 text-xl font-extrabold tracking-tight text-navy transition-colors group-hover:text-blue">
+                    {layer.name}
+                    <svg viewBox="0 0 24 24" className="h-4 w-4 text-navy/35 transition-colors group-hover:text-blue" aria-hidden="true">
+                      <path d="M12 5v14M5 12l7 7 7-7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </p>
+                  <p className="prose-body mt-2 text-navy/75">{layer.body}</p>
+                </a>
               </li>
             ))}
           </ol>
@@ -187,7 +203,8 @@ export default function Focus10Page() {
           {categories.map((category) => (
             <section
               key={category.name}
-              className="overflow-hidden rounded-2xl border border-faint bg-white"
+              id={category.id}
+              className={`overflow-hidden rounded-2xl border border-faint scroll-mt-40 ${category.tint}`}
             >
               <h3
                 className={`px-7 py-4 text-xl font-extrabold uppercase tracking-[0.16em] text-white sm:px-9 ${category.accent}`}

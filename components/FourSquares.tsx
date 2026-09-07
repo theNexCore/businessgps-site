@@ -1,25 +1,21 @@
 /**
  * The L.I.N.K. blocks: Listen. Invest. Nurture. Kindle.
  *
- * The house style, used everywhere L.I.N.K. appears. The four read as ONE
- * continuous element: a single bar with no gaps and no separate borders, and a
- * left-to-right gradient flowing blue → teal → red → navy so the eye travels
- * Listen → Invest → Nurture → Kindle without a break. Content is centred; the
- * words themselves are untouched.
+ * The house style, used everywhere L.I.N.K. appears. Two things define it:
  *
- * Each block is transparent and sits on the shared gradient, so the colour
- * transitions *between* blocks rather than stopping at each edge.
+ * 1. The four read as ONE continuous element — a single bar, no gaps and no
+ *    separate borders, with a gradient flowing blue → teal → red → navy so the
+ *    eye travels Listen → Invest → Nurture → Kindle without a break.
+ * 2. The leading letter of each word is set at roughly twice the rest, in the
+ *    same white, so the acronym reads out of the words themselves.
  */
 
-const practices = ["Listen.", "Invest.", "Nurture.", "Kindle."];
-
-/*
- * blue → teal → red → navy, the four block colours, blended across one bar.
- * Interpolated in oklch: blending teal to red in sRGB passes through a muddy
- * grey, which reads as a printing fault rather than a gradient.
- */
-const GRADIENT =
-  "linear-gradient(in oklch to right, #005ffe 4%, #018197 33%, #ff0000 66%, #001749 97%)";
+const practices = [
+  { initial: "L", rest: "isten." },
+  { initial: "I", rest: "nvest." },
+  { initial: "N", rest: "urture." },
+  { initial: "K", rest: "indle." },
+];
 
 export function FourSquares({
   size = "default",
@@ -29,19 +25,26 @@ export function FourSquares({
   size?: "default" | "large";
   caption?: boolean;
 }) {
-  const type = size === "large" ? "text-2xl sm:text-3xl lg:text-4xl" : "text-xl sm:text-2xl lg:text-3xl";
+  const word = size === "large" ? "text-2xl sm:text-3xl lg:text-4xl" : "text-xl sm:text-2xl lg:text-3xl";
+  // ~2x the rest of the word.
+  const initial = size === "large" ? "text-5xl sm:text-6xl lg:text-7xl" : "text-4xl sm:text-5xl lg:text-6xl";
   const pad = size === "large" ? "py-12 sm:py-16" : "py-10 sm:py-14";
 
   return (
     <div>
-      <div className="overflow-hidden rounded-2xl" style={{ backgroundImage: GRADIENT }}>
-        <ul className="grid grid-cols-2 lg:grid-cols-4">
-          {practices.map((word) => (
+      {/* .link-bar carries the gradient (see globals.css); it flips direction
+          with the layout so each word keeps its own colour when stacked. */}
+      <div className="link-bar overflow-hidden rounded-2xl">
+        <ul className="grid grid-cols-1 lg:grid-cols-4">
+          {practices.map((practice) => (
             <li
-              key={word}
+              key={practice.initial}
               className={`flex items-center justify-center px-4 text-center ${pad}`}
             >
-              <p className={`font-extrabold leading-none tracking-tight text-white ${type}`}>{word}</p>
+              <p className={`font-extrabold leading-none tracking-tight text-white ${word}`}>
+                <span className={initial}>{practice.initial}</span>
+                {practice.rest}
+              </p>
             </li>
           ))}
         </ul>

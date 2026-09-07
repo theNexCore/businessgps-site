@@ -3,6 +3,7 @@ import { BrandArc, CompassPoint, TealArc } from "@/components/BrandGeometry";
 import { CTAPanel } from "@/components/CTAPanel";
 import { MeetingBlocks } from "@/components/MeetingBlocks";
 import { MeetingWheel } from "@/components/MeetingWheel";
+import { NestedYear } from "@/components/NestedYear";
 import { PhotoTile } from "@/components/PhotoTile";
 import { StatCards } from "@/components/StatCards";
 import { YearLegend, YearWheel } from "@/components/YearWheel";
@@ -16,17 +17,6 @@ export const metadata: Metadata = {
     "What it looks like in practice: the meeting and the year. Seventy minutes hard stop, thirteen-week cycles, four quarters.",
   alternates: { canonical: "/in-practice" },
 };
-
-/** The run of stats under the summary. "One weekly meeting" carries the anchor
- *  the old scroll button used to. */
-const summaryStats = [
-  { label: "One weekly meeting", href: "#the-meeting" },
-  { label: "Thirteen weeks at a time" },
-  { label: "Four quarters a year" },
-  { label: "Fifty-two weeks of showing up" },
-  { label: "Community engagement" },
-  { label: "Annual growth workshop" },
-];
 
 const guestPoints = [
   "Nothing is asked of a guest.",
@@ -57,28 +47,23 @@ export default function InPracticePage() {
           professionally.
         </p>
         <TealArc className="mt-8 w-40" />
-        <ul className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-3">
-          {summaryStats.map((stat, index) => (
-            <li key={stat.label} className="flex items-center gap-3">
-              {stat.href ? (
-                <a
-                  href={stat.href}
-                  className="font-bold tracking-tight text-blue underline underline-offset-4"
-                >
-                  {stat.label}
-                </a>
-              ) : (
-                <span className="font-bold tracking-tight text-navy">{stat.label}</span>
-              )}
-              {/* Separator trails its item so a wrapped line never opens with a dot. */}
-              {index < summaryStats.length - 1 ? (
-                <span className="text-navy/30" aria-hidden="true">
-                  &middot;
-                </span>
-              ) : null}
-            </li>
-          ))}
-        </ul>
+
+        <div className="mt-12">
+          <NestedYear />
+        </div>
+
+        {/* The visual lays out the system; the quote lands it. */}
+        <figure className="mt-12 max-w-3xl border-l-4 border-teal pl-7 sm:pl-10">
+          <blockquote>
+            <p className="text-balance text-2xl font-extrabold leading-tight tracking-tight text-navy sm:text-3xl">
+              &ldquo;You do not rise to the level of your goals. You fall to the level of your
+              systems.&rdquo;
+            </p>
+          </blockquote>
+          <figcaption className="mt-5 text-sm font-bold uppercase tracking-[0.16em] text-navy/70">
+            James Clear
+          </figcaption>
+        </figure>
       </Band>
 
       {/* ---------- THE MEETING ---------- */}

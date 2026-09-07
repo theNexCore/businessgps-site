@@ -95,8 +95,8 @@ export default function HomePage() {
         </p>
         <BrandArrow className="relative z-10 mt-8" />
         <p className="prose-body relative z-10 mt-6 max-w-3xl text-lg text-navy/80">
-          BusinessGPS is a structured weekly event where growth happens &mdash; personal and
-          professional. People gather intentionally, to learn and to build real relationships.
+          Of course we network. But if you&rsquo;re looking for just a networking group, this
+          isn&rsquo;t it. It&rsquo;s a launch pad for growth.
         </p>
         <Button href="/join" variant="red" className="relative z-10 mt-9">
           Apply to be a member

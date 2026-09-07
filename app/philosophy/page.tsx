@@ -76,6 +76,15 @@ export default function PhilosophyPage() {
             </li>
           ))}
         </ul>
+
+        {/* Closes the stack — a summary, not one more pillar. */}
+        <div className="mt-12 rounded-2xl border-l-4 border-teal bg-wash px-7 py-8 sm:px-10 sm:py-10">
+          <p className="prose-body max-w-3xl text-lg text-navy/85">
+            Some of these you probably already believe. The rest you can&rsquo;t &mdash; not yet.
+            You don&rsquo;t know L.I.N.K., and you don&rsquo;t know the Focus10. Give it a few
+            months in the room and you&rsquo;ll believe every one of them.
+          </p>
+        </div>
       </Band>
 
       <Band tone="wash">

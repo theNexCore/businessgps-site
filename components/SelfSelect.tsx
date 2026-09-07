@@ -3,7 +3,7 @@ import { SectionHeading } from "./ui";
 
 /**
  * "Is BusinessGPS for you?" — the self-selection block.
- * Shared by the home page and /what-it-is.
+ * Shared by the home page and /what-it-is, so the two can never drift.
  */
 
 const wants = [
@@ -55,14 +55,36 @@ export function SelfSelect({ heading = "Is BusinessGPS for you?" }: { heading?: 
   return (
     <div>
       <SectionHeading className="max-w-2xl">{heading}</SectionHeading>
+
+      {/* Red italic, the same treatment "GPS" carries in the wordmark. */}
+      <p className="mt-4 text-2xl font-extrabold italic tracking-tight text-red sm:text-3xl">
+        It is if&hellip;
+      </p>
+
       <div className="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-16">
         <Column title="You want:" items={wants} tone="want" />
         <Column title="You don't want:" items={dontWants} tone="dont" />
       </div>
-      <p className="mt-14 max-w-4xl text-balance text-2xl font-extrabold leading-tight tracking-tight text-navy sm:text-3xl">
-        We know &mdash; because those are the exact things we didn&rsquo;t want. When we couldn&rsquo;t
-        find it, we built it from scratch. <span className="text-blue">Now ten years running.</span>
-      </p>
+
+      {/* max-w-5xl, not 4xl: at 4xl the badge wraps below its line instead of
+          sitting beside it. */}
+      <div className="mt-14 max-w-5xl">
+        <p className="text-balance text-2xl font-extrabold leading-tight tracking-tight text-navy sm:text-3xl">
+          We know &mdash; because those are all the things we wanted, and all the things we
+          didn&rsquo;t want.
+        </p>
+
+        {/* The badge does the bragging so the sentence doesn't have to. */}
+        <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <p className="text-balance text-2xl font-extrabold leading-tight tracking-tight text-navy sm:text-3xl">
+            When we couldn&rsquo;t find it, we built it from scratch.
+          </p>
+          <span className="inline-flex shrink-0 items-center gap-2 rounded-full bg-navy px-4 py-2 text-sm font-bold tracking-tight text-white">
+            <CompassPoint tone="teal" size="h-3.5 w-3.5" />
+            Nearly ten years running
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
