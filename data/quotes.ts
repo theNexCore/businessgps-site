@@ -29,8 +29,9 @@ export const quotes: Quote[] = [
   {
     name: "Will Schatz",
     business: "Professional golfer and instructor",
-    quote: "",
-    live: false,
+    quote:
+      "I was part of the original BusinessGPS. I really valued the connections and the workshops with the other members — collaborating with different kinds of businesses and realising we all faced similar challenges.",
+    live: true,
   },
 
   // ---- Reserves. Uncomment to bring into rotation. ----
