@@ -4,110 +4,115 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { SocialIcons } from "./SocialIcons";
-import { contact, navLeft, navLinks, navRight, type NavItem } from "./nav-links";
+import { contact, navLinks, type NavItem } from "./nav-links";
 
 /**
- * The sticky main header. The lockup is the centrepiece: centred, full-colour,
- * with the nav split either side of it on wide screens.
+ * The sticky header, in two rows: the lockup centred on top, the six nav items
+ * directly beneath it.
  *
- * On scroll the header condenses — the utility bar hides and the lockup scales
- * down — but the lockup stays centred and stays full-colour.
+ * The lockup is composed from the two real assets rather than from lockup.svg,
+ * so the wordmark can carry ~2.5x its previous size while the compass stays the
+ * size it already was — impossible inside a single fixed-ratio file. Both are
+ * the original paths, each scaled proportionally and nothing else.
  *
- * The lockup markup arrives as a string from the server component so the SVG
- * can be inlined without pulling node:fs across the client boundary.
+ * The markup arrives as strings from the server component: the SVGs are read
+ * off disk, which cannot happen across the client boundary.
  */
 
-function isActive(pathname: string, item: NavItem) {
-  return pathname === item.href || pathname.startsWith(item.href + "/");
+type Lockup = {
+  compassSvg: string;
+  wordmarkSvg: string;
+  compassAspect: number;
+  wordmarkAspect: number;
+};
+
+function isActive(pathname: string, href: string) {
+  return pathname === href || pathname.startsWith(href + "/");
 }
 
-/**
- * One half of the split nav. Each half is its own landmark with a distinct
- * label — a single <nav> cannot span both sides of the centred lockup.
- */
-function NavGroup({
-  items,
-  align,
-  pathname,
-  label,
-}: {
-  items: NavItem[];
-  align: "start" | "end";
-  pathname: string;
-  label: string;
-}) {
+function NavRow({ pathname }: { pathname: string }) {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   return (
-    <nav aria-label={label}>
-    <ul className={"flex items-center gap-7 " + (align === "end" ? "justify-end" : "justify-start")}>
-      {items.map((item) => {
-        const active = isActive(pathname, item);
-        const open = openMenu === item.href;
-        const linkClass =
-          "whitespace-nowrap text-sm font-semibold tracking-tight transition-colors hover:text-blue " +
-          (active ? "text-blue" : "text-navy");
+    <nav aria-label="Main" className="hidden lg:block">
+      <ul className="flex items-center justify-center gap-8 pb-4">
+        {navLinks.map((item: NavItem) => {
+          const active = isActive(pathname, item.href);
+          const open = openMenu === item.href;
+          const linkClass =
+            "whitespace-nowrap text-[0.95rem] font-semibold tracking-tight transition-colors hover:text-blue " +
+            (active ? "text-blue" : "text-navy");
 
-        if (!item.children) {
+          if (!item.children) {
+            return (
+              <li key={item.href}>
+                <Link href={item.href} aria-current={active ? "page" : undefined} className={linkClass}>
+                  {item.label}
+                </Link>
+              </li>
+            );
+          }
+
           return (
-            <li key={item.href}>
-              <Link href={item.href} aria-current={active ? "page" : undefined} className={linkClass}>
-                {item.label}
-              </Link>
+            <li
+              key={item.href}
+              className="relative"
+              onMouseEnter={() => setOpenMenu(item.href)}
+              onMouseLeave={() => setOpenMenu(null)}
+            >
+              <div className="flex items-center gap-1.5">
+                <Link href={item.href} aria-current={active ? "page" : undefined} className={linkClass}>
+                  {item.label}
+                </Link>
+                <button
+                  type="button"
+                  aria-expanded={open}
+                  aria-label={item.label + " submenu"}
+                  onClick={() => setOpenMenu(open ? null : item.href)}
+                  className="text-navy/70 transition-colors hover:text-blue"
+                >
+                  <svg viewBox="0 0 24 24" className="h-3 w-3" aria-hidden="true">
+                    <path
+                      d="M5 8.5 12 15.5 19 8.5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.6"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              {open ? (
+                <div className="absolute left-1/2 top-full z-50 w-56 -translate-x-1/2 pt-3">
+                  <ul className="overflow-hidden rounded-xl border border-faint bg-white py-2 shadow-lg">
+                    {item.children.map((child) => (
+                      <li key={child.href + child.label}>
+                        <Link
+                          href={child.href}
+                          className="block px-5 py-2.5 text-sm font-semibold tracking-tight text-navy transition-colors hover:bg-wash hover:text-blue"
+                        >
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </li>
           );
-        }
+        })}
 
-        return (
-          <li
-            key={item.href}
-            className="relative"
-            onMouseEnter={() => setOpenMenu(item.href)}
-            onMouseLeave={() => setOpenMenu(null)}
+        {/* Apply is the sixth item, but stays a button — the verb implies a bar. */}
+        <li>
+          <Link
+            href="/join"
+            className="inline-flex whitespace-nowrap rounded-full bg-redink px-6 py-2 text-[0.95rem] font-bold text-white transition-colors hover:bg-[#b30000]"
           >
-            <div className="flex items-center gap-1.5">
-              <Link href={item.href} aria-current={active ? "page" : undefined} className={linkClass}>
-                {item.label}
-              </Link>
-              <button
-                type="button"
-                aria-expanded={open}
-                aria-label={item.label + " submenu"}
-                onClick={() => setOpenMenu(open ? null : item.href)}
-                className="text-navy/70 transition-colors hover:text-blue"
-              >
-                <svg viewBox="0 0 24 24" className="h-3 w-3" aria-hidden="true">
-                  <path
-                    d="M5 8.5 12 15.5 19 8.5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.6"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            {open ? (
-              <div className="absolute left-1/2 top-full z-50 w-56 -translate-x-1/2 pt-3">
-                <ul className="overflow-hidden rounded-xl border border-faint bg-white py-2 shadow-lg">
-                  {item.children.map((child) => (
-                    <li key={child.href + child.label}>
-                      <Link
-                        href={child.href}
-                        className="block px-5 py-2.5 text-sm font-semibold tracking-tight text-navy transition-colors hover:bg-wash hover:text-blue"
-                      >
-                        {child.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-          </li>
-        );
-      })}
-    </ul>
+            Apply
+          </Link>
+        </li>
+      </ul>
     </nav>
   );
 }
@@ -138,7 +143,7 @@ function MobileMenu({ pathname }: { pathname: string }) {
         aria-expanded={open}
         aria-controls="mobile-nav"
         aria-label={open ? "Close menu" : "Open menu"}
-        className="flex h-11 w-11 items-center justify-center rounded-md border border-faint text-navy lg:hidden"
+        className="absolute right-0 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-md border border-faint text-navy lg:hidden"
       >
         <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
           {open ? (
@@ -153,7 +158,7 @@ function MobileMenu({ pathname }: { pathname: string }) {
         <nav
           id="mobile-nav"
           aria-label="Main"
-          className="absolute inset-x-0 top-full max-h-[calc(100vh-5rem)] overflow-y-auto border-b border-faint bg-white px-5 pb-8 pt-2 shadow-lg sm:px-8 lg:hidden"
+          className="absolute inset-x-0 top-full z-50 max-h-[calc(100vh-7rem)] overflow-y-auto border-b border-faint bg-white px-5 pb-8 pt-2 shadow-lg sm:px-8 lg:hidden"
         >
           <ul className="divide-y divide-faint">
             {navLinks.map((item) => (
@@ -203,15 +208,7 @@ function MobileMenu({ pathname }: { pathname: string }) {
   );
 }
 
-export function HeaderShell({
-  lockupSvg,
-  lockupAspect,
-  utilityBar,
-}: {
-  lockupSvg: string;
-  lockupAspect: number;
-  utilityBar: ReactNode;
-}) {
+export function HeaderShell({ lockup, utilityBar }: { lockup: Lockup; utilityBar: ReactNode }) {
   const pathname = usePathname();
   const [condensed, setCondensed] = useState(false);
 
@@ -221,6 +218,13 @@ export function HeaderShell({
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Mark and wordmark are sized independently, so the wordmark can never shrink
+  // relative to the mark.
+  // Mobile sizes leave room for the hamburger beside the lockup; the wordmark
+  // carries its full weight from sm upwards.
+  const markHeight = condensed ? "h-[36px] sm:h-[52px]" : "h-[44px] sm:h-[74px]";
+  const wordHeight = condensed ? "h-[21px] sm:h-[32px]" : "h-[26px] sm:h-[46px]";
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-[0_1px_0_rgba(0,23,73,0.08)]">
@@ -235,51 +239,35 @@ export function HeaderShell({
 
       <div className="relative border-b border-faint">
         <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
+          {/* Row one: the lockup, centred. */}
           <div
             className={
-              "grid grid-cols-[1fr_auto_1fr] items-center gap-6 transition-all duration-300 " +
-              (condensed ? "py-2" : "py-4")
+              "relative flex justify-center transition-all duration-300 " +
+              (condensed ? "py-2.5" : "py-4")
             }
           >
-            <div className="hidden lg:block">
-              <NavGroup items={navLeft} align="start" pathname={pathname} label="Primary" />
-            </div>
-
-            <div className="flex justify-start lg:justify-center">
-              <Link
-                href="/"
-                aria-label="BusinessGPS, home"
-                /* Responsive rather than a fixed width: at 336px the lockup
-                   pushes the hamburger off a 390px screen. */
-                className={
-                  "inline-flex rounded-md transition-all duration-300 " +
-                  (condensed
-                    ? "w-[148px] sm:w-[196px] lg:w-[232px]"
-                    : "w-[184px] sm:w-[252px] lg:w-[336px]")
-                }
-              >
+            <Link href="/" aria-label="BusinessGPS, home" className="inline-flex rounded-md">
+              <span className="flex items-center gap-3 sm:gap-4">
                 <span
                   aria-hidden="true"
-                  className="block w-full"
-                  style={{ aspectRatio: String(lockupAspect) }}
-                  dangerouslySetInnerHTML={{ __html: lockupSvg }}
+                  className={"block shrink-0 transition-all duration-300 " + markHeight}
+                  style={{ aspectRatio: String(lockup.compassAspect) }}
+                  dangerouslySetInnerHTML={{ __html: lockup.compassSvg }}
                 />
-              </Link>
-            </div>
+                <span
+                  aria-hidden="true"
+                  className={"block shrink-0 transition-all duration-300 " + wordHeight}
+                  style={{ aspectRatio: String(lockup.wordmarkAspect) }}
+                  dangerouslySetInnerHTML={{ __html: lockup.wordmarkSvg }}
+                />
+              </span>
+            </Link>
 
-            <div className="flex items-center justify-end gap-7">
-              <div className="hidden lg:block">
-                <NavGroup items={navRight} align="end" pathname={pathname} label="Secondary" />
-              </div>
-              <Link
-                href="/join"
-                className="hidden whitespace-nowrap rounded-full bg-redink px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#b30000] lg:inline-flex"
-              >
-                Apply
-              </Link>
-              <MobileMenu pathname={pathname} />
-            </div>
+            <MobileMenu pathname={pathname} />
           </div>
+
+          {/* Row two: the nav, directly below the lockup. */}
+          <NavRow pathname={pathname} />
         </div>
       </div>
     </header>

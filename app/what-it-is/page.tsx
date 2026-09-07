@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { BrandArc, BrandArrow, TealArc } from "@/components/BrandGeometry";
+import { BrandArc, TealArc } from "@/components/BrandGeometry";
+import { CompassAssembly } from "@/components/CompassAssembly";
+import { CompassMark } from "@/components/CompassMark";
 import { CTAPanel } from "@/components/CTAPanel";
 import { HappensThere } from "@/components/HappensThere";
 import { SelfSelect } from "@/components/SelfSelect";
@@ -27,8 +29,11 @@ export default function WhatItIsPage() {
         <Container className="relative z-10 py-16 sm:py-24">
           <Eyebrow tone="light">What it is</Eyebrow>
           <h1 className="max-w-4xl text-balance text-4xl font-extrabold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-6xl">
-            This is not a networking group.
+            What it is (and what it is not)
           </h1>
+          <p className="mt-6 text-balance text-2xl font-extrabold leading-tight tracking-tight text-white sm:text-3xl">
+            This is not a networking group.
+          </p>
           <p className="prose-body mt-7 max-w-3xl text-lg text-white/85">
             BusinessGPS is a structured weekly event where growth happens &mdash; personal and
             professional. People gather intentionally, to learn and to build real relationships.
@@ -41,17 +46,24 @@ export default function WhatItIsPage() {
       <Band tone="white">
         <SectionHeading className="max-w-3xl">What you walk into.</SectionHeading>
         <TealArc className="mt-5 w-40" />
-        <p className="prose-body mt-8 max-w-3xl text-lg text-navy/80">
-          A room of people committed to growth &mdash; their own, and everyone else&rsquo;s. What you
-          walk out with is almost impossible to measure.
-        </p>
-        <BrandArrow className="mt-9" />
+        <div className="mt-10">
+          <CompassAssembly
+            core={<CompassMark part="core" />}
+            markNoArrow={<CompassMark part="no-arrow" />}
+            markWithArrow={<CompassMark part="full" />}
+          />
+        </div>
       </Band>
 
       {/* What happens there */}
       <Band tone="wash">
         <Eyebrow>What happens there</Eyebrow>
-        <HappensThere />
+        {/* The mark sits in its own column beside the lines, never behind them,
+            so it cannot interfere with the reveal or the text layer. */}
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.5fr)] lg:gap-16">
+          <HappensThere />
+          <CompassMark className="mx-auto hidden w-full max-w-[300px] opacity-10 lg:block" />
+        </div>
       </Band>
 
       {/* What it costs */}
@@ -62,8 +74,8 @@ export default function WhatItIsPage() {
             <SectionHeading>
               can be measured. What you get can&rsquo;t be.
             </SectionHeading>
-            <p className="mt-8 text-5xl font-extrabold leading-none tracking-tighter text-navy sm:text-6xl">
-              $59<span className="align-super text-2xl text-redink sm:text-3xl">95</span>
+            <p className="mt-8 text-5xl font-extrabold leading-none tracking-tighter text-tealink sm:text-6xl">
+              $59<span className="align-super text-2xl sm:text-3xl">95</span>
               <span className="ml-3 align-middle text-base font-bold uppercase tracking-[0.18em] text-navy/60">
                 a month
               </span>

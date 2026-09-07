@@ -1,22 +1,25 @@
 /**
  * The L.I.N.K. blocks: Listen. Invest. Nurture. Kindle.
  *
- * They must read as one continuous thing rather than four separate tiles, so a
- * thin thread runs behind the row from Listen through to Kindle and the blocks
- * sit on it without touching. Content is centred, and the emphasis lives on the
- * first letter *inside* each word — there are no floating letters above the
- * blocks.
+ * The house style, used everywhere L.I.N.K. appears. The four read as ONE
+ * continuous element: a single bar with no gaps and no separate borders, and a
+ * left-to-right gradient flowing blue → teal → red → navy so the eye travels
+ * Listen → Invest → Nurture → Kindle without a break. Content is centred; the
+ * words themselves are untouched.
  *
- * Used on the home page and on /philosophy/link; the treatment is defined here
- * once so the two can never drift.
+ * Each block is transparent and sits on the shared gradient, so the colour
+ * transitions *between* blocks rather than stopping at each edge.
  */
 
-const practices = [
-  { word: "isten.", initial: "L", surface: "bg-blue" },
-  { word: "nvest.", initial: "I", surface: "bg-tealink" },
-  { word: "urture.", initial: "N", surface: "bg-red" },
-  { word: "indle.", initial: "K", surface: "bg-navy" },
-];
+const practices = ["Listen.", "Invest.", "Nurture.", "Kindle."];
+
+/*
+ * blue → teal → red → navy, the four block colours, blended across one bar.
+ * Interpolated in oklch: blending teal to red in sRGB passes through a muddy
+ * grey, which reads as a printing fault rather than a gradient.
+ */
+const GRADIENT =
+  "linear-gradient(in oklch to right, #005ffe 4%, #018197 33%, #ff0000 66%, #001749 97%)";
 
 export function FourSquares({
   size = "default",
@@ -26,28 +29,19 @@ export function FourSquares({
   size?: "default" | "large";
   caption?: boolean;
 }) {
-  const pad = size === "large" ? "p-7 sm:p-9" : "p-6 sm:p-7";
-  const type = size === "large" ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl";
-  const initial = size === "large" ? "text-4xl sm:text-5xl" : "text-3xl sm:text-4xl";
+  const type = size === "large" ? "text-2xl sm:text-3xl lg:text-4xl" : "text-xl sm:text-2xl lg:text-3xl";
+  const pad = size === "large" ? "py-12 sm:py-16" : "py-10 sm:py-14";
 
   return (
     <div>
-      <div className="relative">
-        {/* The thread: one line the eye travels from Listen to Kindle. */}
-        <div
-          className="absolute inset-x-[12%] top-1/2 hidden h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-navy/25 to-transparent lg:block"
-          aria-hidden="true"
-        />
-        <ul className="relative grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-          {practices.map((practice) => (
+      <div className="overflow-hidden rounded-2xl" style={{ backgroundImage: GRADIENT }}>
+        <ul className="grid grid-cols-2 lg:grid-cols-4">
+          {practices.map((word) => (
             <li
-              key={practice.initial}
-              className={`flex aspect-square items-center justify-center rounded-2xl text-center ${pad} ${practice.surface}`}
+              key={word}
+              className={`flex items-center justify-center px-4 text-center ${pad}`}
             >
-              <p className={`font-extrabold leading-none tracking-tight text-white ${type}`}>
-                <span className={`align-baseline ${initial}`}>{practice.initial}</span>
-                {practice.word}
-              </p>
+              <p className={`font-extrabold leading-none tracking-tight text-white ${type}`}>{word}</p>
             </li>
           ))}
         </ul>
@@ -55,8 +49,7 @@ export function FourSquares({
 
       {caption ? (
         <p className="prose-body mt-7 max-w-2xl text-navy/75">
-          A lived philosophy taught in BusinessGPS rooms since 2017. It&rsquo;s the working muscle of
-          everything we do.
+          Everyone has something to teach. Everyone has something to learn.
         </p>
       ) : null}
     </div>

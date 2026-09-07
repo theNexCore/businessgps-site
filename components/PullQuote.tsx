@@ -15,7 +15,8 @@ export function PullQuote({ tone = "dark" }: { tone?: "dark" | "light" }) {
             (light ? "text-white" : "text-navy")
           }
         >
-          You can count the seeds in an apple. You can never count the apples in a seed.
+          You can count the number of seeds in an apple, but you can never count the number of
+          apples in a seed.
         </p>
       </blockquote>
       <TealArc className="mt-6" />

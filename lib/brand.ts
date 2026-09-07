@@ -17,13 +17,26 @@ import path from "node:path";
  * copies on one page cannot collide.
  */
 
-export type BrandAsset = "lockup" | "mark";
+export type BrandAsset = "lockup" | "mark" | "compass" | "wordmark";
 
 /** viewBox width / height for each asset — drives the aspect-ratio boxes. */
 export const brandAspect: Record<BrandAsset, number> = {
   lockup: 3072.16 / 1254,
   mark: 1343.82 / 1254,
+  compass: 1,
+  wordmark: 1081.2 / 145.2,
 };
+
+/**
+ * Sub-boxes of compass.svg, in its own user space. Cropping the viewBox to one
+ * of these shows a single part of the mark at full size without touching a
+ * path — the geometry is only ever scaled, never redrawn.
+ */
+export const compassBox = {
+  full: "195.2 40.6 953.2 953.2",
+  core: "493.6 397.4 356.1 335.5",
+  arrow: "648 156.5 408.4 396.8",
+} as const;
 
 const cache = new Map<string, string>();
 

@@ -28,10 +28,10 @@ export function PriceBlock() {
   return (
     <div className="grid items-center gap-10 rounded-panel border border-faint bg-wash px-6 py-12 sm:px-12 sm:py-14 lg:grid-cols-2 lg:gap-16">
       <div>
-        <p className="flex items-start font-extrabold leading-none tracking-tighter text-navy">
+        <p className="flex items-start font-extrabold leading-none tracking-tighter text-tealink">
           <span className="text-6xl sm:text-7xl">$</span>
           <span className="text-8xl sm:text-9xl">59</span>
-          <span className="mt-2 text-4xl text-redink sm:mt-3 sm:text-5xl">95</span>
+          <span className="mt-2 text-4xl sm:mt-3 sm:text-5xl">95</span>
         </p>
         <p className="mt-5 text-sm font-bold uppercase tracking-[0.24em] text-navy/60">Per month</p>
       </div>

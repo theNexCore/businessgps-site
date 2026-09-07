@@ -93,10 +93,15 @@ export default function LinkPage() {
       </Band>
 
       <Band tone="white">
-        <SectionHeading className="max-w-3xl">How the framework gets worked.</SectionHeading>
+        <SectionHeading className="max-w-4xl">
+          Why the L.I.N.K. philosophy is the most important part of BusinessGPS
+        </SectionHeading>
         <p className="prose-body mt-7 max-w-3xl text-lg text-navy/80">
-          L.I.N.K. is how The Focus10 gets worked. The framework names where you grow. These four
-          practices are how the room grows together. BusinessGPS is where it happens.
+          L.I.N.K. is bigger than BusinessGPS. It&rsquo;s a life philosophy &mdash; a skill worth
+          developing from early childhood to your last breath, and it will improve every
+          relationship you have. Listen authentically. Invest the time to do it. Nurture the
+          relationship. Kindle what matters from it, for them and for you. That&rsquo;s the whole
+          thing. BusinessGPS is simply where it gets practiced every week.
         </p>
       </Band>
 

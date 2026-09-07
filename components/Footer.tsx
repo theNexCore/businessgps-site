@@ -21,7 +21,17 @@ export function Footer() {
               <BizGPS tone="light" className="text-3xl" />
             </Link>
             <p className="mt-5 text-sm font-semibold text-white/85">BusinessGPS, a NexCore company</p>
-            <p className="text-sm text-white/60">Powered by NexCore</p>
+            <p className="text-sm text-white/60">
+              Powered by{" "}
+              <a
+                href="https://www.thenexcore.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-white/25 underline-offset-4 transition-colors hover:text-white/90 hover:decoration-white/60"
+              >
+                NexCore
+              </a>
+            </p>
 
             <div className="mt-7 space-y-2">
               <a

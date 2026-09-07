@@ -68,6 +68,17 @@ export default function HomePage() {
         </Container>
       </section>
 
+      {/* Bold claim, directly under the hero */}
+      <Band tone="white" bottom={false}>
+        <p className="max-w-4xl text-balance text-2xl font-extrabold leading-[1.25] tracking-tight text-navy sm:text-3xl">
+          Do these things and it will change your life. That&rsquo;s a bold claim.{" "}
+          <span className="text-blue">
+            It&rsquo;s also the one you&rsquo;ll be making a year from the day you join. Just like
+            everyone else does.
+          </span>
+        </p>
+      </Band>
+
       {/* 3.2 The hook */}
       <Band
         tone="white"
@@ -131,9 +142,7 @@ export default function HomePage() {
       {/* 3.5 The four practices */}
       <Band tone="wash">
         <Eyebrow>How the whole thing works</Eyebrow>
-        <SectionHeading className="mb-10 max-w-2xl">
-          Everyone has something to teach. Everyone has something to learn.
-        </SectionHeading>
+        <SectionHeading className="mb-10 max-w-2xl">L.I.N.K. is what makes the magic.</SectionHeading>
         <FourSquares />
       </Band>
 

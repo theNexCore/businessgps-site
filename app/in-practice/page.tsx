@@ -4,6 +4,7 @@ import { CTAPanel } from "@/components/CTAPanel";
 import { MeetingBlocks } from "@/components/MeetingBlocks";
 import { MeetingWheel } from "@/components/MeetingWheel";
 import { PhotoTile } from "@/components/PhotoTile";
+import { StatCards } from "@/components/StatCards";
 import { YearLegend, YearWheel } from "@/components/YearWheel";
 import { AccentStrip, Band, Container, Eyebrow, SectionHeading } from "@/components/ui";
 import { TOTAL_MINUTES } from "@/data/meeting";
@@ -16,9 +17,15 @@ export const metadata: Metadata = {
   alternates: { canonical: "/in-practice" },
 };
 
-const anchors = [
-  { href: "#the-meeting", label: "The Meeting" },
-  { href: "#the-year", label: "The Year" },
+/** The run of stats under the summary. "One weekly meeting" carries the anchor
+ *  the old scroll button used to. */
+const summaryStats = [
+  { label: "One weekly meeting", href: "#the-meeting" },
+  { label: "Thirteen weeks at a time" },
+  { label: "Four quarters a year" },
+  { label: "Fifty-two weeks of showing up" },
+  { label: "Community engagement" },
+  { label: "Annual growth workshop" },
 ];
 
 const guestPoints = [
@@ -38,21 +45,41 @@ export default function InPracticePage() {
           <h1 className="max-w-3xl text-balance text-4xl font-extrabold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-6xl">
             What it looks like in practice.
           </h1>
-          <ul className="mt-10 flex flex-wrap gap-3">
-            {anchors.map((anchor) => (
-              <li key={anchor.href}>
-                <a
-                  href={anchor.href}
-                  className="inline-flex rounded-full border-2 border-white/30 px-5 py-2 text-sm font-bold text-white transition-colors hover:border-white hover:bg-white/10"
-                >
-                  {anchor.label}
-                </a>
-              </li>
-            ))}
-          </ul>
           <AccentStrip tone="light" className="mt-10 max-w-[180px]" />
         </Container>
       </section>
+
+      {/* 21 — the summary block that replaced the two scroll buttons */}
+      <Band tone="white">
+        <p className="max-w-4xl text-balance text-2xl font-extrabold leading-[1.3] tracking-tight text-navy sm:text-3xl">
+          BusinessGPS is a structured weekly meeting designed to build authentic relationships and
+          create intentional growth, leading to immeasurable results &mdash; both personally and
+          professionally.
+        </p>
+        <TealArc className="mt-8 w-40" />
+        <ul className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-3">
+          {summaryStats.map((stat, index) => (
+            <li key={stat.label} className="flex items-center gap-3">
+              {stat.href ? (
+                <a
+                  href={stat.href}
+                  className="font-bold tracking-tight text-blue underline underline-offset-4"
+                >
+                  {stat.label}
+                </a>
+              ) : (
+                <span className="font-bold tracking-tight text-navy">{stat.label}</span>
+              )}
+              {/* Separator trails its item so a wrapped line never opens with a dot. */}
+              {index < summaryStats.length - 1 ? (
+                <span className="text-navy/30" aria-hidden="true">
+                  &middot;
+                </span>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      </Band>
 
       {/* ---------- THE MEETING ---------- */}
       <Band tone="white" id="the-meeting">
@@ -131,6 +158,26 @@ export default function InPracticePage() {
           </div>
           <YearLegend />
         </div>
+      </Band>
+
+      {/* The chapter-mechanics row from the home page, kept well clear of the
+          summary run at the top so the two do not collide. */}
+      <Band tone="white">
+        <Eyebrow>Chapter mechanics</Eyebrow>
+        <SectionHeading className="mb-10 max-w-2xl">The shape of a chapter.</SectionHeading>
+        <StatCards />
+      </Band>
+
+      {/* 22 — closing statement */}
+      <Band tone="wash">
+        <p className="max-w-4xl text-balance text-2xl font-extrabold leading-[1.3] tracking-tight text-navy sm:text-3xl">
+          Lifelong relationships. Lifelong results. Do these things and it will change your life.
+          That&rsquo;s a bold claim.{" "}
+          <span className="text-blue">
+            It&rsquo;s also the one you&rsquo;ll be making a year from the day you join. Just like
+            everyone else does.
+          </span>
+        </p>
       </Band>
 
       <Band tone="white" bottom={false}>

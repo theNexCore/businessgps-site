@@ -24,6 +24,10 @@ export default function HistoryPage() {
           <h1 className="max-w-3xl text-balance text-4xl font-extrabold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-6xl">
             What happened in those rooms.
           </h1>
+          <p className="prose-body mt-7 max-w-2xl text-lg text-white/85">
+            What happened in those rooms is well documented. And it&rsquo;s happening again right
+            now.
+          </p>
           <AccentStrip tone="light" className="mt-10 max-w-[180px]" />
         </Container>
       </section>
@@ -111,8 +115,7 @@ export default function HistoryPage() {
           </p>
           <div>
             <p className="prose-body text-lg text-navy/80">
-              BusinessGPS relaunches: same beliefs, finally built the way they were meant to fit
-              together.
+              BusinessGPS relaunches. Same beliefs, built to reach even further.
             </p>
             <BrandArrow className="mt-8" />
           </div>

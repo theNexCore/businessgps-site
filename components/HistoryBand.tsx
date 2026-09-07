@@ -14,7 +14,7 @@ const beats = [
   },
   {
     year: "2026",
-    text: "BusinessGPS relaunches: same beliefs, finally built the way they were meant to fit together.",
+    text: "BusinessGPS relaunches. Same beliefs, built to reach even further.",
   },
 ];
 

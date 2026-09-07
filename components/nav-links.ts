@@ -13,9 +13,10 @@ export const navLinks: NavItem[] = [
   {
     href: "/philosophy",
     label: "Philosophy",
+    // L.I.N.K. leads: it is the philosophy, not a sub-topic of the framework.
     children: [
-      { href: "/philosophy/focus10", label: "The Focus10" },
       { href: "/philosophy/link", label: "L.I.N.K." },
+      { href: "/philosophy/focus10", label: "The Focus10" },
     ],
   },
   { href: "/in-practice", label: "In Practice" },

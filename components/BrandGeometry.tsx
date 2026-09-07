@@ -1,91 +1,77 @@
-/**
- * Brand geometry: the logo's shapes reused as structural page elements.
- *
- * These echo the compass mark — its rings, its red arrow, its four-point star.
- * Used sparingly: at least one per page, never more than three. They are
- * decorative, so every one of them is aria-hidden.
- */
+import { CompassMark } from "./CompassMark";
 
 /**
- * The compass mark, meant to bleed off a section corner.
+ * Brand geometry as structural page elements.
  *
- * Always drawn with its four points: rings on their own read as random
- * circles rather than as the brand's mark, so the star is not optional here.
- * `position` picks the corner; the mark is clipped by the section's overflow.
+ * The mark and the arrow are the REAL artwork (components/CompassMark.tsx →
+ * public/brand/compass.svg) — never redrawn, never restyled, only scaled and
+ * faded. The two small pieces below (a star bullet and an underline arc) are
+ * UI furniture, not the mark, and stay hand-drawn.
+ *
+ * Used sparingly: at least one per page, never more than three. Decorative,
+ * so every one of them is aria-hidden.
  */
+
+/** The compass mark as a watermark bleeding off a section corner. */
 export function BrandArc({
   position = "top-right",
   tone = "navy",
   size = 460,
-  core = false,
   className = "",
 }: {
   position?: "top-right" | "top-left" | "bottom-right" | "bottom-left";
   tone?: "navy" | "teal" | "white";
   size?: number;
-  /** Draws the blue centre element, so the mark reads on a light ground. */
-  core?: boolean;
   className?: string;
 }) {
-  const stroke =
-    tone === "white" ? "rgba(255,255,255,0.16)" : tone === "teal" ? "rgba(1,166,194,0.35)" : "rgba(0,23,73,0.10)";
-  const points =
-    tone === "white" ? "rgba(255,255,255,0.13)" : tone === "teal" ? "rgba(1,166,194,0.28)" : "rgba(0,23,73,0.08)";
-
   // Fixed offsets, not percentages: on a tall section a percentage offset
   // drifts the mark into the middle of the copy instead of hugging the corner.
+  // Pulled in far enough that the mark still reads as the mark; bled further
+  // out it becomes an unidentifiable fragment.
   const corner = {
-    "top-right": "-top-40 -right-40",
-    "top-left": "-top-40 -left-40",
-    "bottom-right": "-bottom-40 -right-40",
-    "bottom-left": "-bottom-40 -left-40",
+    "top-right": "-top-20 -right-24",
+    "top-left": "-top-20 -left-24",
+    "bottom-right": "-bottom-20 -right-24",
+    "bottom-left": "-bottom-20 -left-24",
   }[position];
 
-  // Four-point star reaching the outer ring, plus shorter diagonal points.
-  const star =
-    "M100 2 L112 88 L198 100 L112 112 L100 198 L88 112 L2 100 L88 88 Z";
-  const diagonals =
-    "M100 100 L152 48 L128 118 Z M100 100 L48 152 L72 82 Z M100 100 L152 152 L82 128 Z M100 100 L48 48 L118 72 Z";
+  // A watermark, so it is knocked well back; on navy it also needs lifting.
+  const wash = tone === "white" ? "opacity-[0.10]" : "opacity-[0.07]";
 
   return (
-    <svg
-      viewBox="0 0 200 200"
-      width={size}
-      height={size}
+    <span
       aria-hidden="true"
-      className={`pointer-events-none absolute ${corner} ${className}`}
+      className={`pointer-events-none absolute ${corner} ${wash} ${className}`}
+      style={{ width: size, height: size }}
     >
-      <circle cx="100" cy="100" r="92" fill="none" stroke={stroke} strokeWidth="1.5" />
-      <circle cx="100" cy="100" r="68" fill="none" stroke={stroke} strokeWidth="1.5" />
-      <circle cx="100" cy="100" r="44" fill="none" stroke={stroke} strokeWidth="1.5" />
-      <path d={diagonals} fill={points} />
-      <path d={star} fill="none" stroke={stroke} strokeWidth="1.5" strokeLinejoin="round" />
-      {core ? (
-        <>
-          <circle cx="100" cy="100" r="22" fill="rgba(0,95,254,0.22)" />
-          <circle cx="100" cy="100" r="22" fill="none" stroke="rgba(0,95,254,0.55)" strokeWidth="2" />
-        </>
-      ) : null}
-    </svg>
+      <CompassMark part="full" />
+    </span>
   );
 }
 
-/** The red arrow, rising left to right. Used as a divider motif. */
-export function BrandArrow({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 120 40" aria-hidden="true" className={`h-8 w-28 ${className}`}>
-      <path d="M2 34 L96 8" stroke="#FF0000" strokeWidth="4" strokeLinecap="round" />
-      <path d="M78 4 L100 6 L96 27 Z" fill="#FF0000" />
-    </svg>
-  );
+/**
+ * The real red arrow, used as a divider motif and section accent.
+ *
+ * Size is its own prop: passing a width through className would replace the
+ * default rather than add to it, and the SVG would then expand to fill its
+ * container.
+ */
+export function BrandArrow({
+  className = "",
+  size = "w-24",
+}: {
+  className?: string;
+  size?: string;
+}) {
+  return <CompassMark part="arrow" className={size + " " + className} />;
 }
 
 /**
  * The compass four-point star, small, for list bullets and section markers.
  *
- * Size is its own prop rather than something a caller squeezes into className:
- * two competing h-/w- utilities resolve by stylesheet order, not class order,
- * so an override in className would win or lose unpredictably.
+ * A bullet, not the mark — so it stays hand-drawn. Size is its own prop
+ * rather than something a caller squeezes into className: two competing
+ * h-/w- utilities resolve by stylesheet order, not class order.
  */
 export function CompassPoint({
   className = "",
@@ -106,8 +92,7 @@ export function CompassPoint({
 
 /**
  * A thin teal arc that sits under a heading — the Nurture curve from the mark.
- * The base class sets no width so a caller-supplied w-* never collides with it
- * (competing width utilities resolve by stylesheet order, not class order).
+ * The base class sets no width so a caller-supplied w-* never collides with it.
  */
 export function TealArc({ className = "w-40" }: { className?: string }) {
   return (

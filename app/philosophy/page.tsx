@@ -30,16 +30,16 @@ const beliefs = [
 
 const cards = [
   {
-    href: "/philosophy/focus10",
-    eyebrow: "The framework",
-    title: "The Focus10",
-    body: "Ten focus areas, with you at the center.",
-  },
-  {
     href: "/philosophy/link",
     eyebrow: "The practices",
     title: "L.I.N.K.",
     body: "Listen. Invest. Nurture. Kindle.",
+  },
+  {
+    href: "/philosophy/focus10",
+    eyebrow: "The framework",
+    title: "The Focus10",
+    body: "Ten focus areas, with you at the center.",
   },
 ];
 
@@ -48,7 +48,7 @@ export default function PhilosophyPage() {
     <>
       {/* The page statement. */}
       <section className="on-navy relative overflow-hidden bg-navy bg-[radial-gradient(120%_120%_at_15%_0%,#052a6e_0%,#001749_58%)]">
-        <BrandArc position="top-right" tone="white" size={560} core />
+        <BrandArc position="top-right" tone="white" size={560} />
         <Container className="relative z-10 py-16 sm:py-24">
           <Eyebrow tone="light">Philosophy</Eyebrow>
           <h1 className="text-balance text-4xl font-extrabold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-6xl">
