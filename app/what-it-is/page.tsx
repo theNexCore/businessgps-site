@@ -74,7 +74,7 @@ export default function WhatItIsPage() {
             <SectionHeading>
               can be measured. What you get can&rsquo;t be.
             </SectionHeading>
-            <p className="mt-8 text-5xl font-extrabold leading-none tracking-tighter text-tealink sm:text-6xl">
+            <p className="mt-8 text-5xl font-extrabold leading-none tracking-tighter text-teal sm:text-6xl">
               $59<span className="align-super text-2xl sm:text-3xl">95</span>
               <span className="ml-3 align-middle text-base font-bold uppercase tracking-[0.18em] text-navy/60">
                 a month

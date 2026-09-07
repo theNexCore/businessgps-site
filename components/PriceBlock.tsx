@@ -28,7 +28,7 @@ export function PriceBlock() {
   return (
     <div className="grid items-center gap-10 rounded-panel border border-faint bg-wash px-6 py-12 sm:px-12 sm:py-14 lg:grid-cols-2 lg:gap-16">
       <div>
-        <p className="flex items-start font-extrabold leading-none tracking-tighter text-tealink">
+        <p className="flex items-start font-extrabold leading-none tracking-tighter text-teal">
           <span className="text-6xl sm:text-7xl">$</span>
           <span className="text-8xl sm:text-9xl">59</span>
           <span className="mt-2 text-4xl sm:mt-3 sm:text-5xl">95</span>
