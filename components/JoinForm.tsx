@@ -31,7 +31,19 @@ type Errors = Partial<Record<FieldName, string>>;
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-function validate(data: Record<FieldName, string>): Errors {
+const OTHER = "Other";
+
+/** "Why do you want in?" — check all that apply. */
+const WHY_OPTIONS = [
+  "Growth",
+  "Learning",
+  "Relationships",
+  "Collaboration",
+  "Networking",
+  OTHER,
+] as const;
+
+function validate(data: Record<FieldName, string>, otherWithoutText: boolean): Errors {
   const errors: Errors = {};
   if (!data.name.trim()) errors.name = "Please enter your full name.";
   if (!data.email.trim()) errors.email = "Please enter your email.";
@@ -43,7 +55,9 @@ function validate(data: Record<FieldName, string>): Errors {
   // Business name is optional — it still posts, it just isn't gated on.
   if (!data.industry.trim()) errors.industry = "Please enter your industry.";
   if (!data.chapter) errors.chapter = "Please choose a chapter.";
-  if (!data.why.trim()) errors.why = "Tell us why in a sentence or two.";
+  // "Why do you want in?" is optional. The one rule: ticking Other and then
+  // leaving the box empty tells us nothing, so ask for the words.
+  if (otherWithoutText) errors.why = "Tell us a little more about your reason.";
   return errors;
 }
 
@@ -135,21 +149,51 @@ export function JoinForm() {
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "failed">("idle");
 
+  /** The ticked reasons, plus the free text that "Other" asks for. */
+  const [whyChoices, setWhyChoices] = useState<string[]>([]);
+  const [whyOther, setWhyOther] = useState("");
+
+  function toggleWhy(option: string) {
+    setWhyChoices((current) =>
+      current.includes(option)
+        ? current.filter((choice) => choice !== option)
+        : // Kept in WHY_OPTIONS order rather than click order, so the emailed
+          // line reads the same way the form does.
+          WHY_OPTIONS.filter((candidate) => candidate === option || current.includes(candidate)),
+    );
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
 
+    /**
+     * The checkboxes live in React state, not in the form, so the ticked
+     * reasons are folded into one readable line — "Growth, Learning, Other:
+     * we're opening a second location" — and posted as a single `why` field.
+     * That keeps the notification email one line per question.
+     */
+    const otherText = whyOther.trim();
+    const why = whyChoices
+      .map((choice) => (choice === OTHER && otherText ? `${OTHER}: ${otherText}` : choice))
+      .join(", ");
+    formData.set("why", why);
+
     const data = Object.fromEntries(
       fieldNames.map((field) => [field, String(formData.get(field) ?? "")]),
     ) as Record<FieldName, string>;
 
-    const nextErrors = validate(data);
+    const nextErrors = validate(data, whyChoices.includes(OTHER) && !otherText);
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
       const first = Object.keys(nextErrors)[0];
-      form.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+      const target =
+        first === "why"
+          ? form.querySelector<HTMLElement>("#why-other")
+          : form.querySelector<HTMLElement>(`[name="${first}"]`);
+      target?.focus();
       return;
     }
 
@@ -219,20 +263,50 @@ export function JoinForm() {
 
       <Field name="referral" label="How did you hear about us / who invited you?" error={errors.referral} />
 
-      <div>
-        <Label htmlFor="why" required>
-          Why do you want in?
-        </Label>
-        <textarea
-          id="why"
-          name="why"
-          rows={5}
-          aria-invalid={errors.why ? true : undefined}
-          aria-describedby={errors.why ? "why-error" : undefined}
-          className={`${controlClass} ${errors.why ? "border-redink" : ""}`}
-        />
+      <fieldset>
+        <legend className={labelClass}>Why do you want in?</legend>
+        <p className="mt-1 text-sm text-navy/65">Check all that apply.</p>
+
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          {WHY_OPTIONS.map((option) => {
+            const checked = whyChoices.includes(option);
+            return (
+              <label
+                key={option}
+                className={
+                  "flex cursor-pointer items-center gap-3 rounded-xl border-2 px-4 py-3 transition-colors " +
+                  (checked ? "border-blue bg-blue/5" : "border-faint hover:border-navy/25")
+                }
+              >
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => toggleWhy(option)}
+                  className="h-5 w-5 shrink-0 accent-[#005FFE]"
+                />
+                <span className="text-base font-semibold tracking-tight text-navy">{option}</span>
+              </label>
+            );
+          })}
+        </div>
+
+        {whyChoices.includes(OTHER) ? (
+          <div className="mt-4">
+            <Label htmlFor="why-other">Tell us more</Label>
+            <input
+              id="why-other"
+              type="text"
+              value={whyOther}
+              onChange={(event) => setWhyOther(event.target.value)}
+              aria-invalid={errors.why ? true : undefined}
+              aria-describedby={errors.why ? "why-error" : undefined}
+              className={`${controlClass} ${errors.why ? "border-redink" : ""}`}
+            />
+          </div>
+        ) : null}
+
         <FieldError name="why" message={errors.why} />
-      </div>
+      </fieldset>
 
       <div aria-live="polite">
         {status === "failed" ? (
