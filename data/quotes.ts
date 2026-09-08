@@ -2,8 +2,8 @@
  * Member voices, in carousel order: real quotes lead, placeholders follow.
  *
  * `live: false` renders the placeholder treatment instead of a quote, so a
- * card can ship before its words come back. To publish one: paste the quote
- * and flip `live` to true.
+ * card can ship before its words come back. To publish one: paste the quote,
+ * flip `live` to true, and move it up above the remaining placeholders.
  *
  * The carousel reads straight off this array — adding a sixth voice is one
  * object and nothing else.
@@ -33,6 +33,13 @@ export const quotes: Quote[] = [
     live: true,
   },
   {
+    name: "Molly Call",
+    business: "Mortgage Professional",
+    quote:
+      "BusinessGPS is a place for connections, collaborations. A coalition of common purpose, a sense of family where everyone wants to see you succeed and be your best self.",
+    live: true,
+  },
+  {
     name: "Lewis Marty",
     business: "Simploy",
     quote: "",
@@ -41,12 +48,6 @@ export const quotes: Quote[] = [
   {
     name: "Bernadette Corbeil",
     business: "Artemis Construction",
-    quote: "",
-    live: false,
-  },
-  {
-    name: "Molly Call",
-    business: "Mortgage Professional",
     quote: "",
     live: false,
   },
