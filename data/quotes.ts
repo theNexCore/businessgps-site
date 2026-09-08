@@ -49,6 +49,13 @@ export const quotes: Quote[] = [
     live: true,
   },
   {
+    name: "Feliz Tovar",
+    business: "Financial Advisor",
+    quote:
+      "The meetings have been well organized to not only meet people but to grow people. What I mean by that is we weekly meet and go through excercises that enhance our lives personally and professionally. Helping us be more self aware of our strengths and weakness. Truly the best networking group that I have participated in.",
+    live: true,
+  },
+  {
     name: "Bernadette Corbeil",
     business: "Artemis Construction",
     quote: "",
