@@ -40,6 +40,7 @@ const WHY_OPTIONS = [
   "Relationships",
   "Collaboration",
   "Networking",
+  "Connections",
   OTHER,
 ] as const;
 
@@ -275,6 +276,9 @@ export function JoinForm() {
                 key={option}
                 className={
                   "flex cursor-pointer items-center gap-3 rounded-xl border-2 px-4 py-3 transition-colors " +
+                  // Six named reasons fill three tidy rows; Other takes the
+                  // full width below them rather than sitting alone in a half.
+                  (option === OTHER ? "sm:col-span-2 " : "") +
                   (checked ? "border-blue bg-blue/5" : "border-faint hover:border-navy/25")
                 }
               >
