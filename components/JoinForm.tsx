@@ -40,7 +40,7 @@ function validate(data: Record<FieldName, string>): Errors {
   if (!data.mobile.trim()) errors.mobile = "Please enter a mobile number.";
   else if (data.mobile.replace(/\D/g, "").length < 10)
     errors.mobile = "Please enter a full ten-digit number.";
-  if (!data.business.trim()) errors.business = "Please enter your business name.";
+  // Business name is optional — it still posts, it just isn't gated on.
   if (!data.industry.trim()) errors.industry = "Please enter your industry.";
   if (!data.chapter) errors.chapter = "Please choose a chapter.";
   if (!data.why.trim()) errors.why = "Tell us why in a sentence or two.";
@@ -176,10 +176,10 @@ export function JoinForm() {
         <Field name="name" label="Full name" required autoComplete="name" error={errors.name} />
         <Field name="email" label="Email" type="email" required autoComplete="email" error={errors.email} />
         <Field name="mobile" label="Mobile" type="tel" required autoComplete="tel" error={errors.mobile} />
+        {/* Optional: an applicant may not have a business name to give yet. */}
         <Field
           name="business"
           label="Business name"
-          required
           autoComplete="organization"
           error={errors.business}
         />
