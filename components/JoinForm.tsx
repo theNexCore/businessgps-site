@@ -43,7 +43,7 @@ function validate(data: Record<FieldName, string>): Errors {
   // Business name is optional — it still posts, it just isn't gated on.
   if (!data.industry.trim()) errors.industry = "Please enter your industry.";
   if (!data.chapter) errors.chapter = "Please choose a chapter.";
-  // "Why do you want in?" is optional — it still posts when answered.
+  if (!data.why.trim()) errors.why = "Tell us why in a sentence or two.";
   return errors;
 }
 
@@ -220,7 +220,9 @@ export function JoinForm() {
       <Field name="referral" label="How did you hear about us / who invited you?" error={errors.referral} />
 
       <div>
-        <Label htmlFor="why">Why do you want in?</Label>
+        <Label htmlFor="why" required>
+          Why do you want in?
+        </Label>
         <textarea
           id="why"
           name="why"
