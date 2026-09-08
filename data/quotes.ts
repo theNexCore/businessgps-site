@@ -13,6 +13,7 @@ export type Quote = {
   name: string;
   /** Business or title — the line under the name. */
   business: string;
+  /** A newline starts a new paragraph, so a member's own breaks survive. */
   quote: string;
   live: boolean;
 };
@@ -42,8 +43,10 @@ export const quotes: Quote[] = [
   {
     name: "Lewis Marty",
     business: "Simploy",
-    quote: "",
-    live: false,
+    quote:
+      "BusinessGPS is an incredible networking group with a diverse array of members hailing from every corner of industry.\n" +
+      "If you are passionate about improving yourself as a business leader, or, if networking is important to your business, you need to visit BusinessGPS.",
+    live: true,
   },
   {
     name: "Bernadette Corbeil",

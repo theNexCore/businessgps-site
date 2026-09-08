@@ -20,7 +20,15 @@ function Card({ quote }: { quote: Quote }) {
       <figure className="flex h-full flex-col rounded-2xl border border-faint bg-white p-7 sm:p-8">
         {quote.live ? (
           <blockquote className="prose-body flex-1 text-navy">
-            <p>&ldquo;{quote.quote}&rdquo;</p>
+            {/* Quotes ship verbatim, paragraph breaks included: the opening
+                mark goes on the first, the closing mark on the last. */}
+            {quote.quote.split("\n").map((paragraph, i, all) => (
+              <p key={i} className={i > 0 ? "mt-4" : ""}>
+                {i === 0 ? "“" : ""}
+                {paragraph}
+                {i === all.length - 1 ? "”" : ""}
+              </p>
+            ))}
           </blockquote>
         ) : (
           <p className="prose-body flex-1 italic text-navy/45">
