@@ -8,7 +8,7 @@ import { ImageResponse } from "next/og";
  * point `openGraph.images` in app/layout.tsx at it, then delete this file.
  */
 
-export const alt = "BusinessGPS — Growing As Leaders. Together.";
+export const alt = "BusinessGPS — Come here to grow. On purpose.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -34,7 +34,7 @@ export default function OpengraphImage() {
 
         <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
           <div style={{ fontSize: 60, fontWeight: 700, color: "#FFFFFF", letterSpacing: -1 }}>
-            Growing As Leaders. Together.
+            Come here to grow. On purpose.
           </div>
           <div style={{ fontSize: 32, color: "rgba(255,255,255,0.65)" }}>
             A weekly growth community. ourbizgps.com

@@ -16,7 +16,7 @@ import { AccentStrip, Band, Button, Container, Eyebrow, SectionHeading } from "@
 import { photoSets } from "@/data/photos";
 
 export const metadata: Metadata = {
-  title: "BusinessGPS — Growing As Leaders. Together.",
+  title: "BusinessGPS — Come here to grow. On purpose.",
   description:
     "BusinessGPS is a weekly growth community in St. Louis. We build people. People build relationships. Relationships build business. Visiting is free.",
   alternates: { canonical: "/" },

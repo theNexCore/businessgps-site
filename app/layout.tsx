@@ -14,7 +14,8 @@ const sora = Sora({
 export const metadata: Metadata = {
   metadataBase: new URL("https://ourbizgps.com"),
   title: {
-    default: "BusinessGPS — Growing As Leaders. Together.",
+    // Keep this in step with the home page h1 — it is what a shared link shows.
+    default: "BusinessGPS — Come here to grow. On purpose.",
     template: "%s — BusinessGPS",
   },
   description:
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     siteName: "BusinessGPS",
     locale: "en_US",
     url: "https://ourbizgps.com",
-    title: "BusinessGPS — Growing As Leaders. Together.",
+    title: "BusinessGPS — Come here to grow. On purpose.",
     description:
       "A weekly growth community. We build people. People build relationships. Relationships build business.",
   },
