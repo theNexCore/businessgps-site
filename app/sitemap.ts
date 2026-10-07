@@ -11,6 +11,7 @@ const routes = [
   "/chapters/leadership",
   "/history",
   "/join",
+  "/visit",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

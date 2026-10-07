@@ -63,6 +63,16 @@ export function ChapterCard({ chapter }: { chapter: Chapter }) {
       >
         Apply to this chapter
       </Link>
+
+      {/* A guest needs a meeting to come to, so unscheduled chapters skip this. */}
+      {chapter.day === "TBD" ? null : (
+        <Link
+          href={`/visit?chapter=${chapter.id}`}
+          className="mt-3 inline-flex items-center justify-center rounded-full border-2 border-blue px-6 py-3 text-sm font-bold text-blue transition-colors hover:bg-blue/5"
+        >
+          Register as a guest
+        </Link>
+      )}
     </li>
   );
 }

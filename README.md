@@ -206,6 +206,10 @@ Headings, UI and numerals are **Sora**. Long-form body paragraphs use the `.pros
   "NexCore South County — Thursdays, 9:30 AM".
 - The form reads `?chapter=` from `window.location` rather than `useSearchParams`, which would put
   the whole form behind a Suspense boundary and ship a collapsing fallback in the static HTML.
+- Guests register at `/visit` (`components/GuestForm.tsx`). It posts to the same Formspree
+  endpoint with `source=guest-registration` and the subject "BusinessGPS guest registration", and
+  confirms in place instead of redirecting to `/thanks`. Only chapters with a meeting day set are
+  offered; each of those chapter cards links to `/visit?chapter=<id>`.
 - `/thanks` links to Square: `https://square.link/u/OWBELtgt` (opens in a new tab). Square handles
   the first payment; members are invoiced monthly after that.
 - Price is **$59.95** everywhere. The only place `$59` appears alone is the large price graphic,
