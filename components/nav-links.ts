@@ -6,7 +6,7 @@ export type NavItem = {
 
 /**
  * Nav order, left to right: What It Is · Philosophy · In Practice · Chapters ·
- * History, then the Apply button (which is never a plain nav tab).
+ * History · Visit, then the Apply button (which is never a plain nav tab).
  */
 export const navLinks: NavItem[] = [
   { href: "/what-it-is", label: "What It Is" },
@@ -30,6 +30,7 @@ export const navLinks: NavItem[] = [
     ],
   },
   { href: "/history", label: "History" },
+  { href: "/visit", label: "Visit" },
 ];
 
 /** The nav splits either side of the centred lockup on wide screens. */

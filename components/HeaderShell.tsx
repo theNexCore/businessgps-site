@@ -103,7 +103,7 @@ function NavRow({ pathname }: { pathname: string }) {
           );
         })}
 
-        {/* Apply is the sixth item, but stays a button — the verb implies a bar. */}
+        {/* Apply is the last item, but stays a button — the verb implies a bar. */}
         <li>
           <Link
             href="/join"
