@@ -7,7 +7,7 @@ const badgeStyles: Record<Chapter["status"], string> = {
   coming: "border-2 border-blue text-blue",
 };
 
-function Row({ label, value }: { label: string; value: string }) {
+function Row({ label, value, note }: { label: string; value: string; note?: string }) {
   const pending = value === "TBD";
   return (
     <div>
@@ -15,6 +15,7 @@ function Row({ label, value }: { label: string; value: string }) {
       <dd className={`mt-1 tracking-tight ${pending ? "font-semibold text-navy/60" : "font-semibold text-navy"}`}>
         {value}
       </dd>
+      {note ? <dd className="mt-1 text-sm tracking-tight text-navy/70">{note}</dd> : null}
     </div>
   );
 }
@@ -39,7 +40,11 @@ export function ChapterCard({ chapter }: { chapter: Chapter }) {
       </h3>
 
       <dl className="mt-6 flex-1 space-y-4">
-        <Row label="Meets" value={chapter.day === "TBD" ? "TBD" : `${chapter.day}, ${chapter.time}`} />
+        <Row
+          label="Meets"
+          value={chapter.day === "TBD" ? "TBD" : `${chapter.day}, ${chapter.time}`}
+          note={chapter.note}
+        />
         <Row label="Location" value={chapter.locationName} />
         <Row label="Address" value={chapter.address} />
         <Row label={chapter.leaderRole === "TBD" ? "Chapter leader" : chapter.leaderRole} value={chapter.leaderName} />

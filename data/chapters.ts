@@ -14,6 +14,8 @@ export type Chapter = {
   status: ChapterStatus;
   day: string;
   time: string;
+  /** Optional extra line shown under "Meets", e.g. a start date. */
+  note?: string;
   locationName: string;
   address: string;
   leaderName: string;
@@ -42,26 +44,28 @@ export const chapters: Chapter[] = [
   },
   {
     id: "chapter-2",
-    name: "TBD",
-    status: "coming",
-    day: "TBD",
-    time: "TBD",
-    locationName: "TBD",
-    address: "TBD",
+    name: "NexCore Tuesday Morning",
+    status: "launching",
+    day: "Tuesdays",
+    time: "9:30 AM",
+    note: "Starts Tuesday, October 13",
+    locationName: "NexCore South County",
+    address: "11820 Tesson Ferry Rd, Ste 1120, Saint Louis, MO 63128",
     leaderName: "TBD",
-    leaderRole: "TBD",
+    leaderRole: "Chapter leader",
     email: "chapter2@ourbizgps.com",
   },
   {
     id: "chapter-3",
-    name: "TBD",
-    status: "coming",
-    day: "TBD",
-    time: "TBD",
-    locationName: "TBD",
-    address: "TBD",
+    name: "NexCore Friday Lunch",
+    status: "launching",
+    day: "Fridays",
+    time: "11:30 AM – 12:40 PM",
+    note: "Starts Friday, October 23. Lunch available.",
+    locationName: "NexCore South County",
+    address: "11820 Tesson Ferry Rd, Ste 1120, Saint Louis, MO 63128",
     leaderName: "TBD",
-    leaderRole: "TBD",
+    leaderRole: "Chapter leader",
     email: "chapter3@ourbizgps.com",
   },
   {
