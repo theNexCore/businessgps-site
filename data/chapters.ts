@@ -40,7 +40,7 @@ export const chapters: Chapter[] = [
     address: "11820 Tesson Ferry Rd, Ste 1120, Saint Louis, MO 63128",
     leaderName: "TBD",
     leaderRole: "Chapter leader",
-    email: "southcounty@ourbizgps.com",
+    email: "chapter1@ourbizgps.com",
   },
   {
     id: "chapter-2",
