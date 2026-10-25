@@ -32,7 +32,7 @@ export const statusLabels: Record<ChapterStatus, string> = {
 export const chapters: Chapter[] = [
   {
     id: "nexcore-south-county",
-    name: "NexCore South County",
+    name: "NexCore Thursday (Morning)",
     status: "launching",
     day: "Thursdays",
     time: "9:30 AM",
@@ -44,7 +44,7 @@ export const chapters: Chapter[] = [
   },
   {
     id: "chapter-2",
-    name: "NexCore Tuesday Morning",
+    name: "NexCore Tuesday (Morning)",
     status: "launching",
     day: "Tuesdays",
     time: "9:30 AM",
@@ -57,7 +57,7 @@ export const chapters: Chapter[] = [
   },
   {
     id: "chapter-3",
-    name: "NexCore Friday Lunch",
+    name: "NexCore Friday (Lunch)",
     status: "launching",
     day: "Fridays",
     time: "11:30 AM – 12:40 PM",
@@ -70,7 +70,7 @@ export const chapters: Chapter[] = [
   },
   {
     id: "chapter-4",
-    name: "NexCore Wednesday Evening",
+    name: "NexCore Wednesday (Evening)",
     status: "launching",
     day: "Wednesdays",
     time: "6:30 – 7:40 PM",

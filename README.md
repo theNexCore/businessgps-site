@@ -203,7 +203,7 @@ Headings, UI and numerals are **Sora**. Long-form body paragraphs use the `.pros
 - The application form posts to Formspree: `https://formspree.io/f/maeydybz`
   (`components/JoinForm.tsx`). It validates client-side, then redirects to `/thanks`.
 - The chapter dropdown posts the readable label, not the slug, so the notification email reads
-  "NexCore South County — Thursdays, 9:30 AM".
+  "NexCore Thursday (Morning) — Thursdays, 9:30 AM".
 - The form reads `?chapter=` from `window.location` rather than `useSearchParams`, which would put
   the whole form behind a Suspense boundary and ship a collapsing fallback in the static HTML.
 - Guests register at `/visit` (`components/GuestForm.tsx`). It posts to the same Formspree
