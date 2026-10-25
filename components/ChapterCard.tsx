@@ -22,6 +22,10 @@ function Row({ label, value, note }: { label: string; value: string; note?: stri
 
 export function ChapterCard({ chapter }: { chapter: Chapter }) {
   const displayName = chapter.name === "TBD" ? "Chapter to be named" : chapter.name;
+  // "NexCore Thursday (Morning)" puts the session on its own line under the day.
+  const sessionMatch = displayName.match(/^(.*?)\s*(\([^)]*\))$/);
+  const title = sessionMatch ? sessionMatch[1] : displayName;
+  const session = sessionMatch?.[2];
 
   return (
     <li className="flex flex-col rounded-2xl border border-faint bg-white p-7 shadow-[0_1px_0_rgba(0,23,73,0.04)] sm:p-8">
@@ -36,7 +40,8 @@ export function ChapterCard({ chapter }: { chapter: Chapter }) {
           chapter.name === "TBD" ? "text-navy/60" : "text-navy"
         }`}
       >
-        {displayName}
+        {title}
+        {session ? <span className="block">{session}</span> : null}
       </h3>
 
       <dl className="mt-6 flex-1 space-y-4">
