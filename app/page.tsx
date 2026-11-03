@@ -6,6 +6,7 @@ import { FourSquares } from "@/components/FourSquares";
 import { HistoryBand } from "@/components/HistoryBand";
 import { IsntBox } from "@/components/IsntBox";
 import { MeetingLegend, MeetingWheel } from "@/components/MeetingWheel";
+import { NewsletterBand } from "@/components/NewsletterSignup";
 import { PhotoTile } from "@/components/PhotoTile";
 import { PriceBlock } from "@/components/PriceBlock";
 import { PullQuote } from "@/components/PullQuote";
@@ -255,6 +256,9 @@ export default function HomePage() {
           <p className="mt-6 text-sm font-semibold text-white/70">Visiting is free. Always.</p>
         </Container>
       </section>
+
+      {/* 3.15 Newsletter */}
+      <NewsletterBand />
     </>
   );
 }

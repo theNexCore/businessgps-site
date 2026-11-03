@@ -12,6 +12,8 @@ const routes = [
   "/history",
   "/join",
   "/visit",
+  "/privacy",
+  "/anti-spam",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

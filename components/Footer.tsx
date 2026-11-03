@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BizGPS } from "./Lockup";
+import { FooterNewsletter } from "./NewsletterSignup";
 import { SocialIcons } from "./SocialIcons";
 import { contact, navLinks } from "./nav-links";
 import { AccentStrip, Container } from "./ui";
@@ -106,9 +107,19 @@ export function Footer() {
           </div>
         </div>
 
-        <p className="mt-12 border-t border-white/10 pt-6 text-xs text-white/60">
-          &copy; {year} BusinessGPS. All rights reserved.
-        </p>
+        <FooterNewsletter />
+
+        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; {year} BusinessGPS. All rights reserved.</p>
+          <div className="flex gap-6">
+            <Link href="/privacy" className="underline-offset-4 transition-colors hover:text-white hover:underline">
+              Privacy Policy
+            </Link>
+            <Link href="/anti-spam" className="underline-offset-4 transition-colors hover:text-white hover:underline">
+              Anti-Spam Policy
+            </Link>
+          </div>
+        </div>
       </Container>
     </footer>
   );
