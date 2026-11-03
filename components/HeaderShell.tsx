@@ -103,6 +103,16 @@ function NavRow({ pathname }: { pathname: string }) {
           );
         })}
 
+        {/* The newsletter signup is in the footer of every page. */}
+        <li>
+          <a
+            href="#subscribe"
+            className="inline-flex whitespace-nowrap rounded-full border-2 border-navy/25 px-5 py-1.5 text-[0.95rem] font-bold text-navy transition-colors hover:border-navy hover:bg-navy/5"
+          >
+            Subscribe
+          </a>
+        </li>
+
         {/* Apply is the last item, but stays a button — the verb implies a bar. */}
         <li>
           <Link
@@ -187,6 +197,15 @@ function MobileMenu({ pathname }: { pathname: string }) {
           >
             Apply to be a member
           </Link>
+
+          {/* Same page, so the pathname check above won't close the menu. */}
+          <a
+            href="#subscribe"
+            onClick={() => setOpen(false)}
+            className="mt-3 flex w-full items-center justify-center rounded-full border-2 border-navy/25 px-6 py-3.5 text-base font-bold text-navy"
+          >
+            Subscribe
+          </a>
 
           <div className="mt-8 flex flex-col gap-4 border-t border-faint pt-6">
             <a href={contact.phoneHref} className="text-sm font-bold tracking-tight text-navy">

@@ -21,8 +21,9 @@ function ConsentNote({ className }: { className: string }) {
 export function FooterNewsletter() {
   return (
     <section
+      id="subscribe"
       aria-label="Newsletter"
-      className="mt-12 grid gap-6 border-t border-white/10 pt-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.4fr)] lg:gap-12"
+      className="mt-12 grid scroll-mt-40 gap-6 border-t border-white/10 pt-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.4fr)] lg:gap-12"
     >
       <div>
         <h2 className="text-xl font-extrabold tracking-tight text-white">{headline}</h2>
